@@ -36,3 +36,60 @@
     transform: rotate(360deg);
   }
 }
+
+.Card-Container {
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+}
+
+.flex-item{
+  flex-grow: 1;
+}
+
+.card-image {
+  height: 150px;
+  width: 150px;
+  text-align: center; margin: 1em 0;
+}
+
+.card-field {
+  font-weight: bold;
+}
+
+.card-price {
+  font-size: large;
+  font-weight: bold;
+  border: 2px solid black;
+  float: right;
+  padding: 8px;
+}
+
+.card-title-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title-text {
+  font-weight: bold;
+  font-size: medium;
+  color: #6435C9;
+
+}
+
+.card-delete {
+  float: right;
+}
+
+img {
+  object-fit: cover;
+  max-height: 150px;
+  max-width: 150px;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+} 

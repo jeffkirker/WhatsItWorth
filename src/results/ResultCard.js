@@ -42,7 +42,7 @@ class ResultCard extends Component {
             </div>
           </div>
         </div>
-        <div className="card-price">${result.salePrice}</div>
+        <div className="card-price">${(Math.round(result.salePrice * 100) /100).toFixed(2)}</div>
       </Card>
     );
   }

@@ -1,57 +1,124 @@
-import React, { Component } from 'react';
-import { Card, Icon, Image, Grid, Divider } from 'semantic-ui-react';
+import React, { Component } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+} from "@material-ui/core";
 
 class SoldPriceDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      details: null,
+      dataReady: false,
+    };
   }
+
+  componentDidMount() {
+    this.getDetails();
+  }
+
+  // componentDidUpdate() {
+  //   this.getDetails();
+  // }
+
+  getDetails() {
+    var url = encodeURI(`http://localhost:4000/details`);
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((body) => {
+        this.setState({
+          details: body,
+          dataReady: true,
+        });
+        console.log("details",body);
+      });
+  }
+
   render() {
-    return (
-      <div>
-        <Card fluid>
-          <Card.Content>
-            <Card.Header>
-              Price Sold For
-            </Card.Header>
-            <Divider />
-            <Grid centered celled columns={2}>
-              <Grid.Row>
-                <Grid.Column><h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4></Grid.Column>
-                <Grid.Column><h4 style={{ textAlign: "center" }}>Auctions (USD)</h4></Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column>
-                  <Grid centered columns={3}>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Minimum<h4>${this.props.MinBIN}</h4>
-                    </Grid.Column>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Average<h2>${this.props.AvgBIN}</h2>
-                    </Grid.Column>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Maximum<h4>${this.props.MaxBIN}</h4>
-                    </Grid.Column>
+    if (this.state.dataReady) {
+      return (
+        <div>
+          <Card raised style={{marginBottom: "1rem"}}>
+            <CardContent>
+              <CardHeader title="Price Sold For" />
+              <Divider />
+              <Grid container columns={2}>
+                <Grid item xs={6}>
+                  <h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4>
+                  <Grid container align-items="center" justify="center">
+                    <Grid item xs={3} style={{ textAlign: "center" }}>
+                      Minimum
+                      <h4>
+                        $
+                        {this.state.details.MinBIN != null
+                          ? this.state.details.MinBIN
+                          : 0}
+                      </h4>
+                    </Grid>
+                    <Grid item xs={4} style={{ textAlign: "center" }}>
+                      Average
+                      <h2>
+                        $
+                        {this.state.details.AvgBIN != null
+                          ? this.state.details.AvgBIN
+                          : 0}
+                      </h2>
+                    </Grid>
+                    <Grid item xs={3} style={{ textAlign: "center" }}>
+                      Maximum
+                      <h4>
+                        $
+                        {this.state.details.MaxBIN != null
+                          ? this.state.details.MaxBIN
+                          : 0}
+                      </h4>
+                    </Grid>
                   </Grid>
-                </Grid.Column>
-                <Grid.Column>
-                <Grid centered columns={3}>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Minimum<h4>${this.props.MinAuction}</h4>
-                    </Grid.Column>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Average<h2>${this.props.AvgAuction}</h2>
-                    </Grid.Column>
-                    <Grid.Column style={{ textAlign: "center" }}>
-                      Maximum<h4>${this.props.MaxAuction}</h4>
-                    </Grid.Column>
+                </Grid>
+                <Grid item xs={6}>
+                  <h4 style={{ textAlign: "center" }}>Auctions (USD)</h4>
+                  <Grid container align-items="center" justify="center">
+                    <Grid item xs={3} style={{ textAlign: "center" }}>
+                      Minimum
+                      <h4>
+                        $
+                        {this.state.details.MinAuction != null
+                          ? this.state.details.MinAuction
+                          : 0}
+                      </h4>
+                    </Grid>
+                    <Grid item xs={4} style={{ textAlign: "center" }}>
+                      Average
+                      <h2>
+                        $
+                        {this.state.details.AvgAuction != null
+                          ? this.state.details.AvgAuction
+                          : 0}
+                      </h2>
+                    </Grid>
+                    <Grid item xs={4} style={{ textAlign: "center" }}>
+                      Maximum
+                      <h4>
+                        $
+                        {this.state.details.MaxAuction != null
+                          ? this.state.details.MaxAuction
+                          : 0}
+                      </h4>
+                    </Grid>
                   </Grid>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Card.Content>
-        </Card>
-      </div>
-    );
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    } else {
+      return <h1>Loading...</h1>;
+    }
   }
 }
 

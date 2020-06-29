@@ -7,11 +7,8 @@ module.exports = class listing {
     listingUrl,
     country,
     shippingType,
-    listingType,
     dateSold,
     dateListed
-    // condition
-    // bidCount
   ) {
     this.itemId = itemId;
     this.title = title;
@@ -20,12 +17,6 @@ module.exports = class listing {
     this.shippingType = shippingType;
     this.dateSold = dateSold.substring(0, 10);
     this.dateListed = dateListed.substring(0, 10);
-    if (listingType.localeCompare("Auction") === 0) {
-      this.listingType = "Auction";
-    } else {
-      this.listingType = "BIN";
-    }
-
     this.daysToSell = this.getDaysToSell(this.dateListed, this.dateSold);
   }
 
@@ -62,11 +53,52 @@ module.exports = class listing {
   }
 
   setSalePrice(salePrice) {
-    this.salePrice = salePrice;
+    this.salePrice = parseFloat(salePrice);
+  }
+
+  setListingType(listingType) {
+    if (listingType === "Auction") {
+      this.isAuction = true;
+    } else {
+      this.isAuction = false;
+    }
   }
 
   save() {
     Listings.push(this);
+  }
+
+  static getPriceDetails(cb) {
+    const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
+    const arrMax = (arr) => Math.max(...arr);
+    const arrMin = (arr) => Math.min(...arr);
+
+    const BINPrices = [];
+    const AuctionPrices = [];
+    for (var i in Listings) {
+      if (Listings[i].isAuction) {
+        AuctionPrices.push(parseFloat(Listings[i].salePrice));
+      } else {
+        BINPrices.push(parseFloat(Listings[i].salePrice));
+      }
+    }
+    const MinBIN = arrMin(BINPrices).toFixed(2);
+    const MaxBIN = arrMax(BINPrices).toFixed(2);
+    const MinAuction = arrMin(AuctionPrices).toFixed(2);
+    const MaxAuction = arrMax(AuctionPrices).toFixed(2);
+    const AvgBIN = (arrSum(BINPrices) / BINPrices.length).toFixed(2);
+    const AvgAuction = (arrSum(AuctionPrices) / AuctionPrices.length).toFixed(2);
+    const results = {
+      MinBIN,
+      MaxBIN,
+      MinAuction,
+      MaxAuction,
+      AvgBIN,
+      AvgAuction,
+    };
+    console.log(AuctionPrices);
+    console.log(results);
+    cb(results);
   }
 
   static fetchAll(cb) {

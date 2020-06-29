@@ -1,13 +1,28 @@
-import React, { Component } from 'react';
-import { AreaChart, XAxis, YAxis, Area, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, Icon, Image, Divider } from 'semantic-ui-react'
+import React, { Component } from "react";
+import {
+  AreaChart,
+  XAxis,
+  YAxis,
+  Area,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 
 class SoldPriceArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      dataReady: false
+      dummyDate: [
+        { Auction: 1, BuyItNow: 2, name: "a" },
+        { Auction: 3, BuyItNow: 2, name: "b" },
+        { Auction: 5, BuyItNow: 6, name: "c" },
+        { Auction: 2, BuyItNow: 0, name: "d" },
+      ],
+      dataReady: false,
     };
   }
 
@@ -15,12 +30,12 @@ class SoldPriceArea extends Component {
     var resultArr = this.props.resultArr;
     var counter = 0;
     var countingData = {
-      "name": null,
-      "BuyItNowSum": 0,
-      "BuyItNowCount": 0,
-      "AuctionSum": 0,
-      "AuctionCount": 0
-    }
+      name: null,
+      BuyItNowSum: 0,
+      BuyItNowCount: 0,
+      AuctionSum: 0,
+      AuctionCount: 0,
+    };
 
     var data = [];
     for (var i in resultArr) {
@@ -28,69 +43,77 @@ class SoldPriceArea extends Component {
         countingData.name = resultArr[i].dateSold;
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
-          countingData.AuctionSum += resultArr[i].price;
+          countingData.AuctionSum += +resultArr[i].salePrice;
         } else {
           countingData.BuyItNowCount++;
-          countingData.BuyItNowSum += resultArr[i].price;
+          countingData.BuyItNowSum += +resultArr[i].salePrice;
         }
       } else if (countingData.name.localeCompare(resultArr[i].dateSold) === 0) {
-
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
-          countingData.AuctionSum += resultArr[i].price;
+          countingData.AuctionSum += +resultArr[i].salePrice;
         } else {
           countingData.BuyItNowCount++;
-          countingData.BuyItNowSum += resultArr[i].price;
+          countingData.BuyItNowSum += +resultArr[i].salePrice;
         }
       } else {
         var dataPoint = {
-          "name": null,
-          "BuyItNow": 0,
-          "Auction": 0,
-        }
+          name: null,
+          BuyItNow: 0,
+          Auction: 0,
+        };
         dataPoint.name = countingData.name;
         if (countingData.BuyItNowCount > 0) {
-          dataPoint.BuyItNow = parseFloat((countingData.BuyItNowSum / countingData.BuyItNowCount).toFixed(2));
+          dataPoint.BuyItNow = parseFloat(
+            (countingData.BuyItNowSum / countingData.BuyItNowCount).toFixed(2)
+          );
         } else {
           dataPoint.BuyItNow = 0;
         }
         if (countingData.AuctionCount > 0) {
-          dataPoint.Auction = parseFloat((countingData.AuctionSum / countingData.AuctionCount).toFixed(2));
+          dataPoint.Auction = parseFloat(
+            (countingData.AuctionSum / countingData.AuctionCount).toFixed(2)
+          );
         } else {
           dataPoint.Auction = 0;
         }
         data.push(dataPoint);
         var countingData = {
-          "name": null,
-          "BuyItNowSum": 0,
-          "BuyItNowCount": 0,
-          "AuctionSum": 0,
-          "AuctionCount": 0
-        }
+          name: null,
+          BuyItNowSum: 0,
+          BuyItNowCount: 0,
+          AuctionSum: 0,
+          AuctionCount: 0,
+        };
         countingData.name = resultArr[i].dateSold;
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
-          countingData.AuctionSum += resultArr[i].price;
+          countingData.AuctionSum += resultArr[i].salePrice;
         } else {
           countingData.BuyItNowCount++;
-          countingData.BuyItNowSum += resultArr[i].price;
+          countingData.BuyItNowSum += resultArr[i].salePrice;
         }
       }
     }
     if (countingData.name != null) {
+      console.log(countingData);
       var dataPoint = {
-        "name": null,
-        "BuyItNow": 0,
-        "Auction": 0,
-      }
+        name: null,
+        BuyItNow: 0,
+        Auction: 0,
+      };
       dataPoint.name = countingData.name;
       if (countingData.BuyItNowCount > 0) {
-        dataPoint.BuyItNow = parseFloat((countingData.BuyItNowSum / countingData.BuyItNowCount).toFixed(2));
+        dataPoint.BuyItNow = parseFloat(
+          (countingData.BuyItNowSum / countingData.BuyItNowCount).toFixed(2)
+        );
       } else {
         dataPoint.BuyItNow = 0;
       }
       if (countingData.AuctionCount > 0) {
-        dataPoint.Auction = parseFloat((countingData.AuctionSum / countingData.AuctionCount).toFixed(2));
+        dataPoint.Auction = parseFloat(
+          (countingData.AuctionSum / countingData.AuctionCount).toFixed(2)
+        );
       } else {
         dataPoint.Auction = 0;
       }
@@ -102,6 +125,7 @@ class SoldPriceArea extends Component {
   }
 
   componentDidMount() {
+    console.log("listings:", this.props.resultArr);
     this.formatData();
   }
 
@@ -113,41 +137,52 @@ class SoldPriceArea extends Component {
 
   render() {
     if (this.state.dataReady) {
-
+      console.log(this.state.data);
       return (
         <div>
-          <Card fluid={true}>
-            <Card.Content>
-              <Card.Header>Average Prices Over Time</Card.Header>
-              <Divider/>
-            <AreaChart width={560} height={300} data={this.state.data}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
-              <Area type="monotone" dataKey="BuyItNow" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-              <Area type="monotone" dataKey="Auction" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
-            </AreaChart>
-            </Card.Content>
+          <Card raised className="chart-container">
+            <CardHeader title="Average Prices Over Time" />
+
+            <ResponsiveContainer height="100%">
+              <AreaChart
+                data={this.state.data}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="BuyItNow"
+                  stroke="#8884d8"
+                  fillOpacity={1}
+                  fill="url(#colorUv)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Auction"
+                  stroke="#82ca9d"
+                  fillOpacity={1}
+                  fill="url(#colorPv)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </Card>
         </div>
       );
     } else {
-      return (
-        <div>loading...</div>
-
-      )
+      return <div>loading...</div>;
     }
   }
 }

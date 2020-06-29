@@ -18,7 +18,6 @@ exports.getListingsFromKeyword = (req, res, next) => {
       `sortOrder=EndTimeSoonest` +
       `&paginationInput.entriesPerPage=100`
   );
-  console.log(url);
   fetch(url)
     .then((res) => res.json())
     .then((body) => {
@@ -32,14 +31,16 @@ exports.getListingsFromKeyword = (req, res, next) => {
           rawData[i].viewItemURL[0],
           rawData[i].country[0],
           rawData[i].shippingInfo[0].shippingType[0],
-          rawData[i].listingInfo[0].listingType[0],
+          rawData[i].listingInfo[0].endTime[0],
           rawData[i].listingInfo[0].startTime[0],
-          rawData[i].listingInfo[0].endTime[0]
         );
 
         listing.setSalePrice(
-          parseInt(rawData[i].sellingStatus[0].currentPrice[0].__value__).toFixed(2)
+          parseFloat(
+            rawData[i].sellingStatus[0].currentPrice[0].__value__
+          ).toFixed(2)
         );
+        listing.setListingType(rawData[i].listingInfo[0].listingType[0]);
         try {
           listing.setCondition(rawData[i].condition[0].conditionDisplayName[0]);
         } catch {
@@ -65,4 +66,8 @@ exports.getListingsFromKeyword = (req, res, next) => {
     });
 };
 
-exports.formatListings = (req, res, next) => {};
+exports.getListingDetails = (req, res, next) => {
+  Listing.getPriceDetails((results) => {
+    res.send(results);
+  })
+};

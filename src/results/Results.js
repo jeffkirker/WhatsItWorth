@@ -5,13 +5,16 @@ import { Grid } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import AppBar from "@material-ui/core/AppBar";
-import Box from '@material-ui/core/Box';
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import SoldPriceArea from "../visuals/SoldPriceArea";
+import SoldPriceDetails from "../visuals/SoldPriceDetails";
 
 class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 1,
+      tab: 0,
       listings: null,
       value: "",
       AuctionArr: [],
@@ -39,7 +42,7 @@ class Results extends Component {
   };
 
   getResults(terms) {
-    var url = encodeURI(`http://localhost:4000/` + terms);
+    var url = encodeURI(`http://localhost:4000/keywords/` + terms);
 
     fetch(url)
       .then((res) => res.json())
@@ -48,7 +51,6 @@ class Results extends Component {
           listings: body,
           dataReady: true,
         });
-        console.log("Got results", body);
       });
   }
 
@@ -57,45 +59,49 @@ class Results extends Component {
   }
 
   TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
+    const { children, value, index } = props;
+
     return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`scrollable-force-tabpanel-${index}`}
-        aria-labelledby={`scrollable-force-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            {children}
-          </Box>
-        )}
+      <div role="tabpanel" hidden={value !== index}>
+        {value === index && <Box p={2}>{children}</Box>}
       </div>
     );
   }
 
   render() {
     if (this.state.dataReady) {
-      console.log("Listings", this.state.listings);
       return (
-        <div>
+        <div className="result-root">
           <div>
             <SearchHeader handleChange={this.handleChange} />
           </div>
           <div>
-            <AppBar position="static">
+            <div className="tab-bar">
               <Tabs
                 value={this.state.tab}
                 onChange={this.handleTabChange}
-                aria-label="simple tabs example"
+                centered
+                indicatorColor="secondary"
               >
-                <Tab label="Statistics" />
-                <Tab label="Listings" />
+                <Tab className="tab" label="Statistics" />
+                <Tab className="tab" label="Listings" />
               </Tabs>
-            </AppBar>
-            <this.TabPanel value={this.state.tab} index={0}></this.TabPanel>
+            </div>
+            <this.TabPanel value={this.state.tab} index={0}>
+              <Grid
+                container
+                // direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={12} md={8}>
+                  <SoldPriceDetails />
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <SoldPriceArea resultArr={this.state.listings} />
+                </Grid>
+              </Grid>
+            </this.TabPanel>
             <this.TabPanel value={this.state.tab} index={1}>
               <Grid
                 container
@@ -117,8 +123,7 @@ class Results extends Component {
 
             {/* <Container fluid={true}> */}
             {/* <Grid.Column width={4}>
-                <SoldPriceArea
-                  resultArr={this.state.resultArr} />
+               
               </Grid.Column>
               <Grid.Column width={4}>
                 <SoldPriceDetails

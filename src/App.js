@@ -8,6 +8,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import SoldPriceArea from './visuals/SoldPriceArea';
+import SoldPriceDetails from './visuals/SoldPriceDetails';
 
 function App() {
   return (

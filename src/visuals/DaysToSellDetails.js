@@ -28,7 +28,6 @@ class SoldPriceDetails extends Component {
     var AuctionSum = 0;
     var resultArr = this.props.resultArr;
     for (var key in resultArr) {
-      console.log("test", resultArr[key]);
       if (resultArr[key].isAuction) {
         AuctionCount++;
         AuctionSum = AuctionSum + resultArr[key].DaysToSell;
@@ -57,7 +56,6 @@ class SoldPriceDetails extends Component {
       AvgAuction: AvgAuction,
       MaxAuction: MaxAuction
     });
-    console.log(this.state.MaxBIN);
   }
   render() {
     if (this.state.MinBIN == 0) {

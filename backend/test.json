@@ -1,0 +1,84 @@
+body.findCompleteItemsResponse[0].searchResult
+
+{
+  "findCompletedItemsResponse": [
+    {
+      "ack": ["Success"],
+      "version": ["1.13.0"],
+      "timestamp": ["2020-06-19T18:25:30.022Z"],
+      "searchResult": [
+        {
+          "@count": "1",
+          "item": [
+            {
+              "itemId": ["323939114579"],
+              "title": [
+                "Harry Potter Hallmark Keepsake Pewter Ornament Harry Potter Chooses a Wand MINT"
+              ],
+              "globalId": ["EBAY-US"],
+              "primaryCategory": [
+                { "categoryId": ["50757"], "categoryName": ["Harry Potter"] }
+              ],
+              "galleryURL": [
+                "https://thumbs4.ebaystatic.com/m/mjEqZ7cJ8T8lnhcHz_vo1wg/140.jpg"
+              ],
+              "viewItemURL": [
+                "https://www.ebay.com/itm/Harry-Potter-Hallmark-Keepsake-Pewter-Ornament-Harry-Potter-Chooses-Wand-MINT-/323939114579"
+              ],
+              "paymentMethod": ["PayPal"],
+              "autoPay": ["false"],
+              "postalCode": ["225**"],
+              "location": ["Stafford,VA,USA"],
+              "country": ["US"],
+              "shippingInfo": [
+                {
+                  "shippingType": ["Calculated"],
+                  "shipToLocations": ["Worldwide"],
+                  "expeditedShipping": ["true"],
+                  "oneDayShippingAvailable": ["false"],
+                  "handlingTime": ["1"]
+                }
+              ],
+              "sellingStatus": [
+                {
+                  "currentPrice": [
+                    { "@currencyId": "USD", "__value__": "35.0" }
+                  ],
+                  "convertedCurrentPrice": [
+                    { "@currencyId": "USD", "__value__": "35.0" }
+                  ],
+                  "sellingState": ["EndedWithSales"]
+                }
+              ],
+              "listingInfo": [
+                {
+                  "bestOfferEnabled": ["false"],
+                  "buyItNowAvailable": ["false"],
+                  "startTime": ["2019-10-06T01:11:11.000Z"],
+                  "endTime": ["2020-06-19T18:21:16.000Z"],
+                  "listingType": ["StoreInventory"],
+                  "gift": ["false"],
+                  "watchCount": ["4"]
+                }
+              ],
+              "returnsAccepted": ["true"],
+              "condition": [
+                { "conditionId": ["3000"], "conditionDisplayName": ["Used"] }
+              ],
+              "isMultiVariationListing": ["false"],
+              "topRatedListing": ["true"]
+            }
+          ]
+        }
+      ],
+      "paginationOutput": [
+        {
+          "pageNumber": ["1"],
+          "entriesPerPage": ["1"],
+          "totalPages": ["107527"],
+          "totalEntries": ["107527"]
+        }
+      ]
+    }
+  ]
+}

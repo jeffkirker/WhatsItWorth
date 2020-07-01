@@ -75,11 +75,7 @@
 .card-price {
   font-size: large;
   font-weight: bold;
-  border: 2px solid black;
   padding: 8px;
-  margin-right: 16px;
-  margin-left: auto;
-  right: 0;
 }
 
 .card-title-container {
@@ -171,4 +167,9 @@ img {
   margin-bottom: 1rem;
   margin: auto;
   height: 20rem;
+}
+
+.table-header {
+  font-weight: bold;
+  font-size: medium;
 }

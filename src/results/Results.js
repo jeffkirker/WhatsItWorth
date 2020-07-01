@@ -9,12 +9,14 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import SoldPriceArea from "../visuals/SoldPriceArea";
 import SoldPriceDetails from "../visuals/SoldPriceDetails";
+import ResultTable from "./ResultTable";
+import ResultTableTest from "./ResultTableTest";
 
 class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 0,
+      tab: 1,
       listings: null,
       value: "",
       AuctionArr: [],
@@ -110,35 +112,19 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item>
-                  {this.state.listings.map((listing) => (
+                  <ResultTableTest listings={this.state.listings} />
+                  {/* <ResultTable listings={this.state.listings}/> */}
+                  {/* {this.state.listings.map((listing) => (
                     <ResultCard
                       key={listing.itemId}
                       listing={listing}
                       // handleDelete={this.handleDelete.bind(this)}
                     />
-                  ))}
+                  ))} */}
                 </Grid>
               </Grid>
             </this.TabPanel>
-
-            {/* <Container fluid={true}> */}
-            {/* <Grid.Column width={4}>
-               
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <SoldPriceDetails
-                  MaxBIN={this.state.MaxBINPrice}
-                  MaxAuction={this.state.MaxAuctionPrice}
-                  MinBIN={this.state.MinBINPrice}
-                  MinAuction={this.state.MinAuctionPrice}
-                  AvgAuction={this.state.AvgAuction}
-                  AvgBIN={this.state.AvgBIN} />
-
-                <DaysToSellDetails resultArr={this.state.resultArr} />
-
-              </Grid.Column> */}
           </div>
-          {/* </Container> */}
         </div>
       );
     } else {

@@ -45,10 +45,11 @@ class Results extends Component {
 
   getResults(terms) {
     var url = encodeURI(`http://localhost:4000/keywords/` + terms);
-
+    console.timeLog("test");
     fetch(url)
       .then((res) => res.json())
       .then((body) => {
+        console.timeLog("test");
         this.setState({
           listings: body,
           dataReady: true,
@@ -57,6 +58,7 @@ class Results extends Component {
   }
 
   async componentDidMount() {
+    console.time("test");
     this.getResults(this.props.match.params.terms);
   }
 

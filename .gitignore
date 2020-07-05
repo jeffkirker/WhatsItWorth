@@ -24,4 +24,4 @@ yarn-error.log*
 
 #API keys
 .env
-/backend/.env
+/api/config.py

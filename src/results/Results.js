@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import SearchHeader from "../search/SearchHeader";
-import ResultCard from "./ResultCard";
 import { Grid } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import AppBar from "@material-ui/core/AppBar";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import SoldPriceArea from "../visuals/SoldPriceArea";
 import SoldPriceDetails from "../visuals/SoldPriceDetails";
 import ResultTable from "./ResultTable";
-import ResultTableTest from "./ResultTableTest";
+import Box from "@material-ui/core/Box";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ItemRanking from "../visuals/ItemRanking";
+import Popover from "@material-ui/core/Popover";
+import NotificationsPopover from "../popover/notificationPopover";
 
 class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 1,
+      tab: 0,
       listings: null,
+      ranking: null,
       value: "",
       AuctionArr: [],
       dataReady: false,
@@ -50,7 +51,9 @@ class Results extends Component {
       .then((res) => res.json())
       .then((body) => {
         this.setState({
-          listings: body,
+          listings: body.listings.listings,
+          outlierCount: body.listings.outlierCount,
+          ranking: body.details,
           dataReady: true,
         });
       });
@@ -72,6 +75,7 @@ class Results extends Component {
 
   render() {
     if (this.state.dataReady) {
+      // console.log("modified",this.state.listings);
       return (
         <div className="result-root">
           <div>
@@ -79,6 +83,10 @@ class Results extends Component {
           </div>
           <div>
             <div className="tab-bar">
+              <NotificationsPopover
+                listings={this.state.listings}
+                outlierCount={this.state.outlierCount}
+              />
               <Tabs
                 value={this.state.tab}
                 onChange={this.handleTabChange}
@@ -97,6 +105,9 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item xs={12} md={8}>
+                  <ItemRanking ranking={this.state.ranking} />
+                </Grid>
+                <Grid item xs={12} md={8}>
                   <SoldPriceDetails />
                 </Grid>
                 <Grid item xs={12} md={8}>
@@ -112,15 +123,7 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item>
-                  <ResultTableTest listings={this.state.listings} />
-                  {/* <ResultTable listings={this.state.listings}/> */}
-                  {/* {this.state.listings.map((listing) => (
-                    <ResultCard
-                      key={listing.itemId}
-                      listing={listing}
-                      // handleDelete={this.handleDelete.bind(this)}
-                    />
-                  ))} */}
+                  <ResultTable listings={this.state.listings} />
                 </Grid>
               </Grid>
             </this.TabPanel>
@@ -129,11 +132,24 @@ class Results extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="result-root">
           <div>
             <SearchHeader handleChange={this.handleChange} />
           </div>
-          <div>Loading...</div>
+          <div>
+            <div className="tab-bar">
+              <Tabs
+                value={this.state.tab}
+                onChange={this.handleTabChange}
+                centered
+                indicatorColor="secondary"
+              >
+                <Tab className="tab" label="Statistics" />
+                <Tab className="tab" label="Listings" />
+              </Tabs>
+            </div>
+            <CircularProgress style={{ marginTop: "16px" }} />
+          </div>
         </div>
       );
     }

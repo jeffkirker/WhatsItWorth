@@ -15,8 +15,8 @@ module.exports = class listing {
     this.listingUrl = listingUrl;
     this.country = country;
     this.shippingType = shippingType;
-    this.dateSold = dateSold.substring(0, 10);
-    this.dateListed = dateListed.substring(0, 10);
+    this.dateSold = dateSold;
+    this.dateListed = dateListed;
     this.daysToSell = this.getDaysToSell(this.dateListed, this.dateSold);
   }
 
@@ -64,6 +64,10 @@ module.exports = class listing {
     }
   }
 
+  setOutlier(bool) {
+    this.outlier = bool;
+  }
+
   save() {
     Listings.push(this);
   }
@@ -87,7 +91,9 @@ module.exports = class listing {
     const MinAuction = arrMin(AuctionPrices).toFixed(2);
     const MaxAuction = arrMax(AuctionPrices).toFixed(2);
     const AvgBIN = (arrSum(BINPrices) / BINPrices.length).toFixed(2);
-    const AvgAuction = (arrSum(AuctionPrices) / AuctionPrices.length).toFixed(2);
+    const AvgAuction = (arrSum(AuctionPrices) / AuctionPrices.length).toFixed(
+      2
+    );
     const results = {
       MinBIN,
       MaxBIN,
@@ -96,8 +102,6 @@ module.exports = class listing {
       AvgBIN,
       AvgAuction,
     };
-    console.log(AuctionPrices);
-    console.log(results);
     cb(results);
   }
 

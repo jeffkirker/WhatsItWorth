@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import SoldPriceArea from './visuals/SoldPriceArea';
 import SoldPriceDetails from './visuals/SoldPriceDetails';
-import ResultTable from './results/ResultTable';
+import ItemRanking from './visuals/ItemRanking';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             <Search />
           </Route>
         </Switch>
-        {/* <ResultTable /> */}
+
       </div>
     </Router>
   );

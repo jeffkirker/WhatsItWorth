@@ -20,10 +20,6 @@ class SoldPriceDetails extends Component {
     this.getDetails();
   }
 
-  // componentDidUpdate() {
-  //   this.getDetails();
-  // }
-
   getDetails() {
     var url = encodeURI(`http://localhost:4000/details`);
 
@@ -34,7 +30,6 @@ class SoldPriceDetails extends Component {
           details: body,
           dataReady: true,
         });
-        console.log("details",body);
       });
   }
 
@@ -44,8 +39,7 @@ class SoldPriceDetails extends Component {
         <div>
           <Card raised style={{marginBottom: "1rem"}}>
             <CardContent>
-              <CardHeader title="Price Sold For" />
-              <Divider />
+              <CardHeader title="Price Sold For" style={{paddingTop: '0'}}/>
               <Grid container columns={2}>
                 <Grid item xs={6}>
                   <h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4>

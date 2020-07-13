@@ -96,7 +96,6 @@ class SoldPriceArea extends Component {
       }
     }
     if (countingData.name != null) {
-      console.log(countingData);
       var dataPoint = {
         name: null,
         BuyItNow: 0,
@@ -125,7 +124,6 @@ class SoldPriceArea extends Component {
   }
 
   componentDidMount() {
-    console.log("listings:", this.props.resultArr);
     this.formatData();
   }
 
@@ -137,7 +135,6 @@ class SoldPriceArea extends Component {
 
   render() {
     if (this.state.dataReady) {
-      console.log(this.state.data);
       return (
         <div>
           <Card raised className="chart-container">

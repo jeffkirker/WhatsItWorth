@@ -1,116 +1,130 @@
-import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Paper from "@material-ui/core/Paper";
-import { Divider } from "@material-ui/core";
+import React, { Component, forwardRef } from "react";
+import MaterialTable from "material-table";
 
-const ResultTable = (props) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+import AddBox from "@material-ui/icons/AddBox";
+import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import Check from "@material-ui/icons/Check";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+import Clear from "@material-ui/icons/Clear";
+import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import Edit from "@material-ui/icons/Edit";
+import FilterList from "@material-ui/icons/FilterList";
+import FirstPage from "@material-ui/icons/FirstPage";
+import LastPage from "@material-ui/icons/LastPage";
+import Remove from "@material-ui/icons/Remove";
+import SaveAlt from "@material-ui/icons/SaveAlt";
+import Search from "@material-ui/icons/Search";
+import ViewColumn from "@material-ui/icons/ViewColumn";
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, props.listings.length - page * rowsPerPage);
-
-  return (
-    <div>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">
-                <div className="table-header">Thumbnail</div>
-              </TableCell>
-              <TableCell align="left">
-                <div className="table-header">Title</div>
-              </TableCell>
-              <TableCell align="center">
-                <div className="table-header">Date Sold</div>
-              </TableCell>
-              <TableCell align="center">
-                <div className="table-header">Country Sold From</div>
-              </TableCell>
-              <TableCell align="center">
-                <div className="table-header">Condition</div>
-              </TableCell>
-              <TableCell align="right">
-                <div className="table-header">Price (USD)</div>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? props.listings.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : props.listings
-            ).map((listing) => (
-              <TableRow key={listing.itemId}>
-                <TableCell align="center">
-                  <a
-                    className="card-title-text"
-                    href={listing.listingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={listing.imageUrl} alt="" />
-                  </a>
-                </TableCell>
-                <TableCell align="left">
-                  <a
-                    className="card-title-text"
-                    href={listing.listingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {listing.title}
-                  </a>
-                </TableCell>
-                <TableCell align="center">{listing.dateSold}</TableCell>
-                <TableCell align="center">{listing.country}</TableCell>
-                <TableCell align="center">{listing.condition}</TableCell>
-                <TableCell align="right">
-                  <div className="card-price">
-                    ${(Math.round(listing.salePrice * 100) / 100).toFixed(2)}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-            {emptyRows > 0 && (
-              <TableRow>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={props.listings.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </div>
-  );
+const tableIcons = {
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  DetailPanel: forwardRef((props, ref) => (
+    <ChevronRight {...props} ref={ref} />
+  )),
+  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  PreviousPage: forwardRef((props, ref) => (
+    <ChevronLeft {...props} ref={ref} />
+  )),
+  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
+
+class ResultTable extends Component {
+  render() {
+    return (
+      <div style={{ maxWidth: "100%" }}>
+        <MaterialTable
+          icons={tableIcons}
+          columns={[
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+              },
+              sorting: false,
+              title: "Thumbnail",
+              field: "imageUrl",
+              render: (rowData) => <img src={rowData.imageUrl} alt="" />,
+            },
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+              },
+              sorting: false,
+              title: "Title",
+              field: "title",
+              render: (rowData) => (
+                <a
+                  className="card-title-text"
+                  href={rowData.listingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {rowData.title}
+                </a>
+              ),
+            },
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+              },
+              title: "Date Sold",
+              field: "dateSold",
+            },
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+              },
+              title: "Country",
+              field: "country",
+            },
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+              },
+              sorting: false,
+              title: "Condition",
+              field: "condition",
+            },
+            {
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "medium",
+                alignItems: "right",
+                paddingRight: "24px",
+              },
+              cellStyle: {
+                fontWeight: "bold",
+                fontSize: "large",
+                paddingRight: "24px",
+              },
+              type: "currency",
+              title: "Sold For (USD)",
+              field: "salePrice",
+            },
+          ]}
+          data={this.props.listings}
+          options={{ search: false, showTitle: false }}
+        />
+      </div>
+    );
+  }
+}
 
 export default ResultTable;

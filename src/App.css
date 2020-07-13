@@ -151,6 +151,8 @@ img {
 }
 
 .tab-bar {
+  display: flex;
+  flex-direction: row;
   background-color: #6435c9;
   color: white;
   font-weight: bold;
@@ -172,4 +174,20 @@ img {
 .table-header {
   font-weight: bold;
   font-size: medium;
+}
+
+.item-grade-letter {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 10rem;
+}
+
+.item-grade-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-grade-row {
+  display: flex;
+  flex-direction: row;
 }

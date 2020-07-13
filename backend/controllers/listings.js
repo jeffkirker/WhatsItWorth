@@ -1,6 +1,9 @@
 const Listing = require("../models/listing");
 
+const itemGrade = require("../modules/itemGrade");
+
 const fetch = require("node-fetch");
+const getOutliers = require("../modules/getOutliers");
 
 exports.getListingsFromKeyword = (req, res, next) => {
   Listing.deleteAll();
@@ -32,7 +35,7 @@ exports.getListingsFromKeyword = (req, res, next) => {
           rawData[i].country[0],
           rawData[i].shippingInfo[0].shippingType[0],
           rawData[i].listingInfo[0].endTime[0],
-          rawData[i].listingInfo[0].startTime[0],
+          rawData[i].listingInfo[0].startTime[0]
         );
 
         listing.setSalePrice(
@@ -56,11 +59,15 @@ exports.getListingsFromKeyword = (req, res, next) => {
         } catch {
           listing.setImageUrl(null);
         }
+        listing.setOutlier(false);
         listing.save();
       }
 
       Listing.fetchAll((listings) => {
-        res.send(listings);
+        res.send({
+          listings: getOutliers.getOutliers(listings),
+          details: itemGrade.itemGrade(listings),
+        });
       });
       // res.send(rawData);
     });
@@ -69,5 +76,5 @@ exports.getListingsFromKeyword = (req, res, next) => {
 exports.getListingDetails = (req, res, next) => {
   Listing.getPriceDetails((results) => {
     res.send(results);
-  })
+  });
 };

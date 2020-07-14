@@ -1,5 +1,3 @@
-var Listings = [];
-
 module.exports = class listing {
   constructor(
     itemId,
@@ -68,47 +66,5 @@ module.exports = class listing {
     this.outlier = bool;
   }
 
-  save() {
-    Listings.push(this);
-  }
-
-  static getPriceDetails(cb) {
-    const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
-    const arrMax = (arr) => Math.max(...arr);
-    const arrMin = (arr) => Math.min(...arr);
-
-    const BINPrices = [];
-    const AuctionPrices = [];
-    for (var i in Listings) {
-      if (Listings[i].isAuction) {
-        AuctionPrices.push(parseFloat(Listings[i].salePrice));
-      } else {
-        BINPrices.push(parseFloat(Listings[i].salePrice));
-      }
-    }
-    const MinBIN = arrMin(BINPrices).toFixed(2);
-    const MaxBIN = arrMax(BINPrices).toFixed(2);
-    const MinAuction = arrMin(AuctionPrices).toFixed(2);
-    const MaxAuction = arrMax(AuctionPrices).toFixed(2);
-    const AvgBIN = (arrSum(BINPrices) / BINPrices.length).toFixed(2);
-    const AvgAuction = (arrSum(AuctionPrices) / AuctionPrices.length).toFixed(
-      2
-    );
-    const results = {
-      MinBIN,
-      MaxBIN,
-      MinAuction,
-      MaxAuction,
-      AvgBIN,
-      AvgAuction,
-    };
-    cb(results);
-  }
-
-  static fetchAll(cb) {
-    cb(Listings);
-  }
-  static deleteAll() {
-    Listings = [];
-  }
+  
 };

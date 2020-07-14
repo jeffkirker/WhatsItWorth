@@ -4,10 +4,11 @@ const itemGrade = require("../modules/itemGrade");
 
 const fetch = require("node-fetch");
 const getOutliers = require("../modules/getOutliers");
+const getPriceDetails = require("../modules/getPriceDetails");
 
 exports.getListingsFromKeyword = (req, res, next) => {
-  Listing.deleteAll();
   const keywords = req.params.keywords;
+  var listings = [];
   var url = encodeURI(
     `https://svcs.ebay.com` +
       `/services/search/FindingService/v1?OPERATION-NAME=findCompletedItems&` +
@@ -60,14 +61,13 @@ exports.getListingsFromKeyword = (req, res, next) => {
           listing.setImageUrl(null);
         }
         listing.setOutlier(false);
-        listing.save();
+        listings.push(listing);
       }
 
-      Listing.fetchAll((listings) => {
-        res.send({
-          listings: getOutliers.getOutliers(listings),
-          details: itemGrade.itemGrade(listings),
-        });
+      res.send({
+        listings: getOutliers.getOutliers(listings),
+        ranking: itemGrade.itemGrade(listings),
+        details: getPriceDetails.getPriceDetails(listings)
       });
       // res.send(rawData);
     });

@@ -11,6 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemRanking from "../visuals/ItemRanking";
 import Popover from "@material-ui/core/Popover";
 import NotificationsPopover from "../popover/notificationPopover";
+import { thomsonCrossSectionDependencies } from "mathjs";
 
 class Results extends Component {
   constructor(props) {
@@ -53,7 +54,8 @@ class Results extends Component {
         this.setState({
           listings: body.listings.listings,
           outlierCount: body.listings.outlierCount,
-          ranking: body.details,
+          ranking: body.ranking,
+          details: body.details,
           dataReady: true,
         });
       });
@@ -108,7 +110,7 @@ class Results extends Component {
                   <ItemRanking ranking={this.state.ranking} />
                 </Grid>
                 <Grid item xs={12} md={8}>
-                  <SoldPriceDetails />
+                  <SoldPriceDetails details={this.state.details} />
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <SoldPriceArea resultArr={this.state.listings} />

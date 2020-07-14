@@ -17,7 +17,8 @@ class SoldPriceDetails extends Component {
   }
 
   componentDidMount() {
-    this.getDetails();
+    this.setState({ details: this.props.details, dataReady: true });
+    // this.getDetails();
   }
 
   getDetails() {
@@ -37,9 +38,9 @@ class SoldPriceDetails extends Component {
     if (this.state.dataReady) {
       return (
         <div>
-          <Card raised style={{marginBottom: "1rem"}}>
+          <Card raised style={{ marginBottom: "1rem" }}>
             <CardContent>
-              <CardHeader title="Price Sold For" style={{paddingTop: '0'}}/>
+              <CardHeader title="Price Sold For" style={{ paddingTop: "0" }} />
               <Grid container columns={2}>
                 <Grid item xs={6}>
                   <h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4>

@@ -9,9 +9,9 @@ import ResultTable from "./ResultTable";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemRanking from "../visuals/ItemRanking";
-import Popover from "@material-ui/core/Popover";
 import NotificationsPopover from "../popover/notificationPopover";
-import { thomsonCrossSectionDependencies } from "mathjs";
+
+import { getPriceDetails, itemGrade } from "./../utilities/utils";
 
 class Results extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class Results extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   handleChange(value) {
@@ -43,6 +44,22 @@ class Results extends Component {
 
   handleTabChange = (event, newValue) => {
     this.setState({ tab: newValue });
+  };
+
+  handleRemove = (event, rowData) => {
+    this.setState({ dataReady: false });
+    const index = rowData.tableData.id;
+    var listings = [...this.state.listings];
+    listings.splice(index, 1);
+
+    const details = getPriceDetails(listings);
+    const ranking = itemGrade(listings);
+    this.setState({
+      listings: listings,
+      details: details,
+      ranking: ranking,
+      dataReady: true,
+    });
   };
 
   getResults(terms) {
@@ -125,7 +142,10 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item>
-                  <ResultTable listings={this.state.listings} />
+                  <ResultTable
+                    listings={this.state.listings}
+                    handleRemove={this.handleRemove}
+                  />
                 </Grid>
               </Grid>
             </this.TabPanel>

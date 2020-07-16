@@ -21,7 +21,9 @@ const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
   Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => (
+    <DeleteOutline {...props} ref={ref} color="error" />
+  )),
   DetailPanel: forwardRef((props, ref) => (
     <ChevronRight {...props} ref={ref} />
   )),
@@ -120,7 +122,14 @@ class ResultTable extends Component {
             },
           ]}
           data={this.props.listings}
-          options={{ search: false, showTitle: false }}
+          actions={[
+            {
+              icon: tableIcons.Delete,
+              tooltip: "Remove Listing",
+              onClick: this.props.handleRemove
+            },
+          ]}
+          options={{ search: false, showTitle: false, actionsColumnIndex: -1 }}
         />
       </div>
     );

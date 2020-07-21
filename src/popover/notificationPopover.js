@@ -37,7 +37,6 @@ export default function NotificationsPopover(props) {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-  console.log("outliers", props.outliers);
 
   return (
     <div>
@@ -67,7 +66,6 @@ export default function NotificationsPopover(props) {
             There are {props.outlierCount} outliers in your results.{" "}
             <a onClick={handleClickOpen}>Click here</a> to view them.
             <OutlierDialog
-              // selectedValue={selectedValue}
               open={DialogOpen}
               onClose={handleDialogClose}
               listings={props.outliers}

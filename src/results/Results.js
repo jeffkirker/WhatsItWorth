@@ -18,12 +18,14 @@ class Results extends Component {
     super(props);
     this.state = {
       tab: 0,
-      listings: null,
+      listings: [],
       ranking: null,
       outliers: [],
       value: "",
       AuctionArr: [],
       dataReady: false,
+      noData: false,
+      outlierCount: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,7 +51,6 @@ class Results extends Component {
 
   handleRemove = (event, rowData) => {
     this.setState({ dataReady: false });
-    const index = rowData.tableData.id;
     const itemID = rowData.itemId;
     var listings = [...this.state.listings];
     var outliers = [...this.state.outliers];
@@ -70,8 +71,8 @@ class Results extends Component {
     // const modified = getOutliers(listings);
     this.setState({
       listings: listings,
-      outlierCount: outliers.length,
       outliers: outliers,
+      outlierCount: outliers.length,
       details: details,
       ranking: ranking,
       dataReady: true,
@@ -84,14 +85,21 @@ class Results extends Component {
     fetch(url)
       .then((res) => res.json())
       .then((body) => {
-        this.setState({
-          listings: body.listings.listings,
-          outlierCount: body.listings.outlierCount,
-          outliers: body.listings.outliers,
-          ranking: body.ranking,
-          details: body.details,
-          dataReady: true,
-        });
+        if (body.length > 0) {
+          this.setState({
+            listings: body.listings.listings,
+            outlierCount: body.listings.outlierCount,
+            outliers: body.listings.outliers,
+            ranking: body.ranking,
+            details: body.details,
+            dataReady: true,
+          });
+        } else {
+          this.setState({
+            noData: true,
+            dataReady: true
+          })
+        }
       });
   }
 
@@ -110,7 +118,7 @@ class Results extends Component {
   }
 
   render() {
-    if (this.state.dataReady) {
+    if (this.state.dataReady && !this.state.noData) {
       console.log("modified", this.state.outliers);
       return (
         <div className="result-root">
@@ -171,7 +179,7 @@ class Results extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if (!this.state.dataReady && !this.state.noData) {
       return (
         <div className="result-root">
           <div>
@@ -190,6 +198,57 @@ class Results extends Component {
               </Tabs>
             </div>
             <CircularProgress style={{ marginTop: "16px" }} />
+          </div>
+        </div>
+      );
+    } else if (this.state.dataReady && this.state.noData) {
+      return (
+        <div className="result-root">
+          <div>
+            <SearchHeader handleChange={this.handleChange} />
+          </div>
+          <div>
+            <div className="tab-bar">
+              <NotificationsPopover
+                listings={this.state.listings}
+                outlierCount={this.state.outlierCount}
+                outliers={this.state.outliers}
+                handleRemove={this.handleRemove}
+              />
+              <Tabs
+                value={this.state.tab}
+                onChange={this.handleTabChange}
+                centered
+                indicatorColor="secondary"
+              >
+                <Tab className="tab" label="Statistics" />
+                <Tab className="tab" label="Listings" />
+              </Tabs>
+            </div>
+            <this.TabPanel value={this.state.tab} index={0}>
+              <Grid
+                container
+                // direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={12} md={8}>
+                  <ItemRanking ranking={"F"} />
+                </Grid>
+              </Grid>
+            </this.TabPanel>
+            <this.TabPanel value={this.state.tab} index={1}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <h1>No Results</h1>
+                </Grid>
+              </Grid>
+            </this.TabPanel>
           </div>
         </div>
       );

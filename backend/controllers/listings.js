@@ -25,51 +25,56 @@ exports.getListingsFromKeyword = (req, res, next) => {
   fetch(url)
     .then((res) => res.json())
     .then((body) => {
-      // The actual array of listings is:
-      // body.findCompletedItemsResponse[0].searchResult[0].item
+      console.log(body.findCompletedItemsResponse[0].searchResult[0]);
       const rawData = body.findCompletedItemsResponse[0].searchResult[0].item;
-      for (let i in rawData) {
-        var listing = new Listing(
-          rawData[i].itemId[0],
-          rawData[i].title[0],
-          rawData[i].viewItemURL[0],
-          rawData[i].country[0],
-          rawData[i].shippingInfo[0].shippingType[0],
-          rawData[i].listingInfo[0].endTime[0],
-          rawData[i].listingInfo[0].startTime[0]
-        );
+      if (rawData) {
+        for (let i in rawData) {
+          var listing = new Listing(
+            rawData[i].itemId[0],
+            rawData[i].title[0],
+            rawData[i].viewItemURL[0],
+            rawData[i].country[0],
+            rawData[i].shippingInfo[0].shippingType[0],
+            rawData[i].listingInfo[0].endTime[0],
+            rawData[i].listingInfo[0].startTime[0]
+          );
 
-        listing.setSalePrice(
-          parseFloat(
-            rawData[i].sellingStatus[0].currentPrice[0].__value__
-          ).toFixed(2)
-        );
-        listing.setListingType(rawData[i].listingInfo[0].listingType[0]);
-        try {
-          listing.setCondition(rawData[i].condition[0].conditionDisplayName[0]);
-        } catch {
-          listing.setCondition(null);
+          listing.setSalePrice(
+            parseFloat(
+              rawData[i].sellingStatus[0].currentPrice[0].__value__
+            ).toFixed(2)
+          );
+          listing.setListingType(rawData[i].listingInfo[0].listingType[0]);
+          try {
+            listing.setCondition(
+              rawData[i].condition[0].conditionDisplayName[0]
+            );
+          } catch {
+            listing.setCondition(null);
+          }
+          try {
+            listing.setBidCount(rawData[i].sellingStatus[0].bidCount[0]);
+          } catch {
+            listing.setBidCount(0);
+          }
+          try {
+            listing.setImageUrl(rawData[i].galleryURL[0]);
+          } catch {
+            listing.setImageUrl(null);
+          }
+          listing.setOutlier(false);
+          listings.push(listing);
         }
-        try {
-          listing.setBidCount(rawData[i].sellingStatus[0].bidCount[0]);
-        } catch {
-          listing.setBidCount(0);
-        }
-        try {
-          listing.setImageUrl(rawData[i].galleryURL[0]);
-        } catch {
-          listing.setImageUrl(null);
-        }
-        listing.setOutlier(false);
-        listings.push(listing);
+
+        res.send({
+          listings: getOutliers.getOutliers(listings),
+          ranking: itemGrade.itemGrade(listings),
+          details: getPriceDetails.getPriceDetails(listings),
+        });
+        // res.send(rawData);
+      } else {
+        res.send([]);
       }
-
-      res.send({
-        listings: getOutliers.getOutliers(listings),
-        ranking: itemGrade.itemGrade(listings),
-        details: getPriceDetails.getPriceDetails(listings)
-      });
-      // res.send(rawData);
     });
 };
 

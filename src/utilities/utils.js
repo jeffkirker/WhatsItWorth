@@ -1,3 +1,5 @@
+import { std, mean } from "mathjs";
+
 export const getPriceDetails = (listings) => {
   const arrSum = (arr) => arr.reduce((a, b) => a + b, 0);
   const arrMax = (arr) => Math.max(...arr);
@@ -118,4 +120,35 @@ export const itemGrade = (listings) => {
     pastSales: pastSales,
     turnAround: Math.round(turnAround),
   };
+};
+
+export const getOutliers = (listings) => {
+  const outliers = [];
+  var priceArr = [];
+  var outlierCount = 0;
+
+  for (var i in listings) {
+    priceArr.push(parseFloat(listings[i].salePrice));
+  }
+  priceArr.sort();
+
+  const stdDev = std(priceArr);
+  const priceMean = mean(priceArr);
+
+  for (var i in listings) {
+    if (listings[i].salePrice >= priceMean + 1.5 * stdDev) {
+      listings[i].outlier = true;
+      outliers.push(listings[i]);
+      outlierCount += 1;
+    } else if (listings[i].salePrice <= priceMean - 1.5 * stdDev) {
+      listings[i].outlier = true;
+      outliers.push(listings[i]);
+      outlierCount += 1;
+    }
+  }
+  console.log("mean", priceMean);
+  console.log("upperLimit", priceMean + 1.5 * stdDev);
+  console.log("lowerLimit", priceMean - 1.5 * stdDev);
+
+  return { listings: listings, outlierCount: outlierCount, outliers: outliers };
 };

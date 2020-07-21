@@ -30,9 +30,11 @@ exports.getOutliers = (listings) => {
   for (var i in listings) {
     if (listings[i].salePrice >= priceMean + 1.5 * stdDev) {
       listings[i].outlier = true;
+      outliers.push(listings[i]);
       outlierCount += 1;
     } else if (listings[i].salePrice <= priceMean - 1.5 * stdDev) {
       listings[i].outlier = true;
+      outliers.push(listings[i]);
       outlierCount += 1;
     }
   }
@@ -40,5 +42,5 @@ exports.getOutliers = (listings) => {
   console.log("upperLimit", priceMean + 1.5 * stdDev);
   console.log("lowerLimit", priceMean - 1.5 * stdDev);
 
-  return {listings: listings, outlierCount: outlierCount};
+  return {listings: listings, outlierCount: outlierCount, outliers: outliers};
 };

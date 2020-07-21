@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemRanking from "../visuals/ItemRanking";
 import NotificationsPopover from "../popover/notificationPopover";
 
-import { getPriceDetails, itemGrade } from "./../utilities/utils";
+import { getPriceDetails, itemGrade, getOutliers } from "./../utilities/utils";
 
 class Results extends Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class Results extends Component {
       tab: 0,
       listings: null,
       ranking: null,
+      outliers: [],
       value: "",
       AuctionArr: [],
       dataReady: false,
@@ -49,13 +50,28 @@ class Results extends Component {
   handleRemove = (event, rowData) => {
     this.setState({ dataReady: false });
     const index = rowData.tableData.id;
+    const itemID = rowData.itemId;
     var listings = [...this.state.listings];
-    listings.splice(index, 1);
-
+    var outliers = [...this.state.outliers];
+    console.log("Outliers", outliers);
+    // listings.splice(index, 1);
+    for (var i in listings) {
+      if (itemID === listings[i].itemId) {
+        listings.splice(i, 1);
+      }
+    }
+    for (var i in outliers) {
+      if (itemID === outliers[i].itemId) {
+        outliers.splice(i, 1);
+      }
+    }
     const details = getPriceDetails(listings);
     const ranking = itemGrade(listings);
+    // const modified = getOutliers(listings);
     this.setState({
       listings: listings,
+      outlierCount: outliers.length,
+      outliers: outliers,
       details: details,
       ranking: ranking,
       dataReady: true,
@@ -71,6 +87,7 @@ class Results extends Component {
         this.setState({
           listings: body.listings.listings,
           outlierCount: body.listings.outlierCount,
+          outliers: body.listings.outliers,
           ranking: body.ranking,
           details: body.details,
           dataReady: true,
@@ -94,7 +111,7 @@ class Results extends Component {
 
   render() {
     if (this.state.dataReady) {
-      // console.log("modified",this.state.listings);
+      console.log("modified", this.state.outliers);
       return (
         <div className="result-root">
           <div>
@@ -105,6 +122,8 @@ class Results extends Component {
               <NotificationsPopover
                 listings={this.state.listings}
                 outlierCount={this.state.outlierCount}
+                outliers={this.state.outliers}
+                handleRemove={this.handleRemove}
               />
               <Tabs
                 value={this.state.tab}

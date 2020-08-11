@@ -54,7 +54,7 @@ class Results extends Component {
     const itemID = rowData.itemId;
     var listings = [...this.state.listings];
     var outliers = [...this.state.outliers];
-    console.log("Outliers", outliers);
+    // console.log("Outliers", outliers);
     // listings.splice(index, 1);
     for (var i in listings) {
       if (itemID === listings[i].itemId) {
@@ -79,13 +79,25 @@ class Results extends Component {
     });
   };
 
-  getResults(terms) {
-    var url = encodeURI(`http://localhost:4000/keywords/` + terms);
-
+  getResults(terms, minPrice, maxPrice, beforeDate, afterDate) {
+    var url = encodeURI(
+      `http://localhost:4000/api?keywords=` +
+        terms +
+        `&minPrice=` +
+        minPrice +
+        `&maxPrice=` +
+        maxPrice +
+        `&beforeDate=` +
+        beforeDate +
+        `&afterDate=` +
+        afterDate
+    );
+    console.log("url", url);
     fetch(url)
       .then((res) => res.json())
       .then((body) => {
-        if (body.length > 0) {
+        // console.log("raw",body);
+        if (body.listings.listings.length > 0) {
           this.setState({
             listings: body.listings.listings,
             outlierCount: body.listings.outlierCount,
@@ -97,14 +109,21 @@ class Results extends Component {
         } else {
           this.setState({
             noData: true,
-            dataReady: true
-          })
+            dataReady: true,
+          });
         }
       });
   }
 
   async componentDidMount() {
-    this.getResults(this.props.match.params.terms);
+    console.log("date", this.props.location.state.beforeDate);
+    this.getResults(
+      this.props.match.params.terms,
+      this.props.location.state.minPrice,
+      this.props.location.state.maxPrice,
+      this.props.location.state.beforeDate,
+      this.props.location.state.afterDate
+    );
   }
 
   TabPanel(props) {
@@ -119,7 +138,7 @@ class Results extends Component {
 
   render() {
     if (this.state.dataReady && !this.state.noData) {
-      console.log("modified", this.state.outliers);
+      // console.log("modified", this.state.outliers);
       return (
         <div className="result-root">
           <div>

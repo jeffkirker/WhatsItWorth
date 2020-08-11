@@ -3,11 +3,20 @@ const Listing = require("../models/listing");
 const itemGrade = require("../modules/itemGrade");
 
 const fetch = require("node-fetch");
+const URL = require("url");
+
 const getOutliers = require("../modules/getOutliers");
 const getPriceDetails = require("../modules/getPriceDetails");
 
 exports.getListingsFromKeyword = (req, res, next) => {
-  const keywords = req.params.keywords;
+  const queryObject = URL.parse(req.url, true).query;
+  const keywords = queryObject.keywords;
+  const maxPrice = queryObject.maxPrice;
+  const minPrice = queryObject.minPrice;
+  const beforeDate = queryObject.beforeDate;
+  const afterDate = queryObject.afterDate;
+  console.log(queryObject);
+  // const keywords = req.params.keywords;
   var listings = [];
   var url = encodeURI(
     `https://svcs.ebay.com` +
@@ -19,14 +28,22 @@ exports.getListingsFromKeyword = (req, res, next) => {
       `keywords=${keywords}&` +
       `itemFilter(0).name=SoldItemsOnly&` +
       `itemFilter(0).value=true&` +
+      `itemFilter(1).name=EndTimeTo&` +
+      `itemFilter(1).value=${beforeDate}&` +
+      `itemFilter(2).name=EndTimeFrom&` +
+      `itemFilter(2).value=${afterDate}&` +
+      `itemFilter(3).name=MinPrice&` +
+      `itemFilter(3).value=${minPrice}&` +
+      `itemFilter(4).name=MaxPrice&` +
+      `itemFilter(4).value=${maxPrice}&` +
       `sortOrder=EndTimeSoonest` +
       `&paginationInput.entriesPerPage=100`
   );
   fetch(url)
     .then((res) => res.json())
     .then((body) => {
-      console.log(body.findCompletedItemsResponse[0].searchResult[0]);
       const rawData = body.findCompletedItemsResponse[0].searchResult[0].item;
+      // res.send(rawData[0]);
       if (rawData) {
         for (let i in rawData) {
           var listing = new Listing(
@@ -73,7 +90,7 @@ exports.getListingsFromKeyword = (req, res, next) => {
         });
         // res.send(rawData);
       } else {
-        res.send([]);
+        res.send({ listings: { listings: [] } });
       }
     });
 };

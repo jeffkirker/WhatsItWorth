@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Typography, Divider, TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import AdvancedSearch from "./AdvancedSearch";
 
 class SearchHeader extends Component {
   constructor(props) {
@@ -22,7 +23,9 @@ class SearchHeader extends Component {
   render() {
     return (
       <div className="search-header-container">
-        <h2 className="search-header-title">What's It Worth?</h2>
+        <Link to="/">
+          <h2 className="search-header-title">What's It Worth?</h2>
+        </Link>
         <form className="search-header-container">
           <div className="search-header-search-bar">
             <TextField

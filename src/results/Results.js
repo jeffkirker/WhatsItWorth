@@ -12,6 +12,7 @@ import ItemRanking from "../visuals/ItemRanking";
 import NotificationsPopover from "../popover/notificationPopover";
 
 import { getPriceDetails, itemGrade, getOutliers } from "./../utilities/utils";
+import SoldPriceScatter from "../visuals/SoldPriceScatter";
 
 class Results extends Component {
   constructor(props) {
@@ -177,6 +178,9 @@ class Results extends Component {
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <SoldPriceArea resultArr={this.state.listings} />
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <SoldPriceScatter resultArr={this.state.listings} />
                 </Grid>
               </Grid>
             </this.TabPanel>

@@ -40,7 +40,7 @@ class SoldPriceArea extends Component {
     var data = [];
     for (var i in resultArr) {
       if (countingData.name == null) {
-        countingData.name = resultArr[i].dateSold;
+        countingData.name = resultArr[i].dateSold.slice(0, 10);
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
           countingData.AuctionSum += +resultArr[i].salePrice;
@@ -48,7 +48,10 @@ class SoldPriceArea extends Component {
           countingData.BuyItNowCount++;
           countingData.BuyItNowSum += +resultArr[i].salePrice;
         }
-      } else if (countingData.name.localeCompare(resultArr[i].dateSold) === 0) {
+      } else if (
+        countingData.name.localeCompare(resultArr[i].dateSold.slice(0, 10)) ===
+        0
+      ) {
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
           countingData.AuctionSum += +resultArr[i].salePrice;
@@ -85,7 +88,7 @@ class SoldPriceArea extends Component {
           AuctionSum: 0,
           AuctionCount: 0,
         };
-        countingData.name = resultArr[i].dateSold;
+        countingData.name = resultArr[i].dateSold.slice(0, 10);
         if (resultArr[i].isAuction) {
           countingData.AuctionCount++;
           countingData.AuctionSum += resultArr[i].salePrice;
@@ -137,7 +140,7 @@ class SoldPriceArea extends Component {
     if (this.state.dataReady) {
       return (
         <div>
-          <Card raised className="chart-container">
+          <Card raised className="chart-container" style={{ marginBottom: "1rem" }}>
             <CardHeader title="Average Prices Over Time" />
 
             <ResponsiveContainer height="100%">

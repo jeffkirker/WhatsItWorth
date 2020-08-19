@@ -11,12 +11,31 @@ const getPriceDetails = require("../modules/getPriceDetails");
 exports.getListingsFromKeyword = (req, res, next) => {
   const queryObject = URL.parse(req.url, true).query;
   const keywords = queryObject.keywords;
-  const maxPrice = queryObject.maxPrice;
-  const minPrice = queryObject.minPrice;
-  const beforeDate = queryObject.beforeDate;
-  const afterDate = queryObject.afterDate;
+  var afterDate = new Date();
+  afterDate.setMonth(afterDate.getMonth() - 3);
+  afterDate = afterDate.toISOString();
+  var beforeDate = new Date();
+  beforeDate = beforeDate.toISOString();
+  var maxPrice = 9999999;
+  var minPrice = 0;
+
+  if (queryObject.maxPrice === undefined) {
+    maxPrice = queryObject.maxPrice;
+  }
+  if (queryObject.minPrice === undefined) {
+    minPrice = queryObject.minPrice;
+  }
+  if (queryObject.beforeDate === undefined) {
+    beforeDate = queryObject.beforeDate;
+  }
+  if (queryObject.afterDate === undefined) {
+    afterDate = queryObject.afterDate;
+  }
   console.log(queryObject);
-  // const keywords = req.params.keywords;
+  console.log(beforeDate);
+  console.log(afterDate);
+  console.log(minPrice);
+  console.log(maxPrice);
   var listings = [];
   var url = encodeURI(
     `https://svcs.ebay.com` +

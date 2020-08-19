@@ -1,13 +1,23 @@
 import React, { Component } from "react";
-import { Typography, Divider, TextField, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import AdvancedSearch from "./AdvancedSearch";
 
 class SearchHeader extends Component {
   constructor(props) {
     super(props);
+    var afterDate = new Date();
+    afterDate.setMonth(afterDate.getMonth() - 3);
+    afterDate = afterDate.toISOString();
+    var beforeDate = new Date();
+    beforeDate = beforeDate.toISOString();
     this.state = {
       value: "",
+      listingType: { Auction: true, BIN: true },
+      category: "",
+      beforeDate: beforeDate,
+      afterDate: afterDate,
+      minPrice: 0,
+      maxPrice: 9999999,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +48,11 @@ class SearchHeader extends Component {
             </TextField>
           </div>
           <div className="search-header-search-button">
-            <Link to={`/results/${encodeURI(this.state.value)}`}>
+            <Link
+              to={{
+                pathname: `/results/${encodeURI(this.state.value)}`,
+              }}
+            >
               <button
                 className="search-button"
                 onClick={this.handleSubmit}

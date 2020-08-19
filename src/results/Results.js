@@ -17,6 +17,11 @@ import SoldPriceScatter from "../visuals/SoldPriceScatter";
 class Results extends Component {
   constructor(props) {
     super(props);
+    var afterDate = new Date();
+    afterDate.setMonth(afterDate.getMonth() - 3);
+    afterDate = afterDate.toISOString();
+    var beforeDate = new Date();
+    beforeDate = beforeDate.toISOString();
     this.state = {
       tab: 0,
       listings: [],
@@ -27,6 +32,10 @@ class Results extends Component {
       dataReady: false,
       noData: false,
       outlierCount: 0,
+      beforeDate: beforeDate,
+      afterDate: afterDate,
+      minPrice: 0,
+      maxPrice: 9999999,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -117,13 +126,20 @@ class Results extends Component {
   }
 
   async componentDidMount() {
-    console.log("date", this.props.location.state.beforeDate);
+    if (this.props.location.state !== undefined) {
+      this.setState({
+        minPrice: this.props.location.state.minPrice,
+        maxPrice: this.props.location.state.maxPrice,
+        beforeDate: this.props.location.state.beforeDate,
+        afterDate: this.props.location.state.afterDate,
+      });
+    }
     this.getResults(
       this.props.match.params.terms,
-      this.props.location.state.minPrice,
-      this.props.location.state.maxPrice,
-      this.props.location.state.beforeDate,
-      this.props.location.state.afterDate
+      this.state.minPrice,
+      this.state.maxPrice,
+      this.state.beforeDate,
+      this.state.afterDate
     );
   }
 

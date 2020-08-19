@@ -55,6 +55,9 @@ class ResultTable extends Component {
                 fontWeight: "bold",
                 fontSize: "medium",
               },
+              cellStyle: {
+                width: '225px'
+              },
               sorting: false,
               title: "Thumbnail",
               field: "imageUrl",
@@ -64,6 +67,9 @@ class ResultTable extends Component {
               headerStyle: {
                 fontWeight: "bold",
                 fontSize: "medium",
+              },
+              cellStyle: {
+                width: '500px'
               },
               sorting: false,
               title: "Title",
@@ -84,6 +90,9 @@ class ResultTable extends Component {
                 fontWeight: "bold",
                 fontSize: "medium",
               },
+              cellStyle: {
+                width: '100px'
+              },
               title: "Date Sold",
               field: "dateSold",
             },
@@ -92,6 +101,9 @@ class ResultTable extends Component {
                 fontWeight: "bold",
                 fontSize: "medium",
               },
+              cellStyle: {
+                width: '100px'
+              },
               title: "Country",
               field: "country",
             },
@@ -99,6 +111,9 @@ class ResultTable extends Component {
               headerStyle: {
                 fontWeight: "bold",
                 fontSize: "medium",
+              },
+              cellStyle: {
+                width: '100px'
               },
               sorting: false,
               title: "Condition",
@@ -115,6 +130,7 @@ class ResultTable extends Component {
                 fontWeight: "bold",
                 fontSize: "large",
                 paddingRight: "24px",
+                width: '225px'
               },
               type: "currency",
               title: "Sold For (USD)",
@@ -126,10 +142,19 @@ class ResultTable extends Component {
             {
               icon: tableIcons.Delete,
               tooltip: "Remove Listing",
-              onClick: this.props.handleRemove
+              onClick: this.props.handleRemove,
             },
           ]}
-          options={{ search: false, showTitle: false, actionsColumnIndex: -1 }}
+          options={{
+            search: false,
+            showTitle: false,
+            actionsColumnIndex: -1,
+            rowStyle: {
+              height: "200px",
+              minWidth: "100%",
+            },
+            minHeight: `100%`,
+          }}
         />
       </div>
     );

@@ -226,6 +226,12 @@ class Results extends Component {
           </div>
           <div>
             <div className="tab-bar">
+              <NotificationsPopover
+                listings={this.state.listings}
+                outlierCount={this.state.outlierCount}
+                outliers={this.state.outliers}
+                handleRemove={this.handleRemove}
+              />
               <Tabs
                 value={this.state.tab}
                 onChange={this.handleTabChange}

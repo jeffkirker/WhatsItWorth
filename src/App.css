@@ -153,6 +153,7 @@ img {
 .tab-bar {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   background-color: #6435c9;
   color: white;
   font-weight: bold;

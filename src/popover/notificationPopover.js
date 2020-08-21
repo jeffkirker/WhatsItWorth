@@ -37,48 +37,51 @@ export default function NotificationsPopover(props) {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
-  return (
-    <div>
-      <IconButton
-        aria-describedby={id}
-        style={{ color: "white" }}
-        onClick={handleClick}
-      >
-        <NotificationsIcon />
-      </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        {props.outlierCount > 0 && (
-          <Alert severity="warning">
-            There are {props.outlierCount} outliers in your results.{" "}
-            <a onClick={handleClickOpen}>Click here</a> to view them.
-            <OutlierDialog
-              open={DialogOpen}
-              onClose={handleDialogClose}
-              listings={props.outliers}
-              handleRemove={props.handleRemove}
-            />
-          </Alert>
-        )}
-        {props.listings.length >= 80 && (
-          <Alert severity="info">
-            You have a lot of results. Consider refining your search terms.
-          </Alert>
-        )}
-      </Popover>
-    </div>
-  );
+  if (props.outlierCount > 0 || props.listings.length >= 80) {
+    return (
+      <div>
+        <IconButton
+          aria-describedby={id}
+          style={{ color: "white" }}
+          onClick={handleClick}
+        >
+          <NotificationsIcon />
+        </IconButton>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          {props.outlierCount > 0 && (
+            <Alert severity="warning">
+              There are {props.outlierCount} outliers in your results.{" "}
+              <a onClick={handleClickOpen}>Click here</a> to view them.
+              <OutlierDialog
+                open={DialogOpen}
+                onClose={handleDialogClose}
+                listings={props.outliers}
+                handleRemove={props.handleRemove}
+              />
+            </Alert>
+          )}
+          {props.listings.length >= 80 && (
+            <Alert severity="info">
+              You have a lot of results. Consider refining your search terms.
+            </Alert>
+          )}
+        </Popover>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
 }

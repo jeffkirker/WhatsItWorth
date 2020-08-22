@@ -208,9 +208,11 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item>
+                   
                   <ResultTable
                     listings={this.state.listings}
                     handleRemove={this.handleRemove}
+                    resultTable={true}
                   />
                 </Grid>
               </Grid>

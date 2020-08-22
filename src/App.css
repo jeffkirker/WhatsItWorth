@@ -89,9 +89,10 @@
   font-size: medium;
   color: #6435c9;
   float: center;
-  line-clamp: 2;
+  word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .card-delete {
@@ -205,4 +206,16 @@ img {
   justify-content: center;
   width: 100%;
   margin: 8px 0 8px 0;
+}
+
+.responsive-table {
+  width: 80vw;
+  margin: auto;
+  display: table;
+}
+
+.responsive-table-outliers {
+  width: 100%;
+  margin: auto;
+  display: table;
 }

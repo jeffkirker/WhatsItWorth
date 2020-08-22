@@ -16,6 +16,8 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import { Hidden } from "@material-ui/core";
+import { thomsonCrossSectionDependencies } from "mathjs";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -44,120 +46,104 @@ const tableIcons = {
 };
 
 class ResultTable extends Component {
-  render() {
+  tableRender() {
     return (
-      <div style={{ maxWidth: "100%" }}>
-        <MaterialTable
-          icons={tableIcons}
-          columns={[
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-              },
-              cellStyle: {
-                width: '225px'
-              },
-              sorting: false,
-              title: "Thumbnail",
-              field: "imageUrl",
-              render: (rowData) => <img src={rowData.imageUrl} alt="" />,
+      <MaterialTable
+        icons={tableIcons}
+        columns={[
+          {
+            align: "center",
+            sorting: false,
+            title: "Thumbnail",
+            field: "imageUrl",
+            render: (rowData) => (
+              <img
+                style={{ maxWidth: "100%", height: "auto" }}
+                src={rowData.imageUrl}
+                alt=""
+              />
+            ),
+          },
+          {
+            align: "center",
+            cellStyle: {
+              width: "30%",
             },
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-              },
-              cellStyle: {
-                width: '500px'
-              },
-              sorting: false,
-              title: "Title",
-              field: "title",
-              render: (rowData) => (
-                <a
-                  className="card-title-text"
-                  href={rowData.listingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {rowData.title}
-                </a>
-              ),
+            sorting: false,
+            title: "Title",
+            field: "title",
+            render: (rowData) => (
+              <a
+                className="card-title-text"
+                href={rowData.listingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {rowData.title}
+              </a>
+            ),
+          },
+          {
+            align: "center",
+            title: "Date Sold",
+            field: "dateSold",
+            render: (rowData) => rowData.dateSold.slice(0, 10),
+          },
+          {
+            align: "center",
+            title: "Country",
+            field: "country",
+          },
+          {
+            align: "center",
+            sorting: false,
+            title: "Condition",
+            field: "condition",
+          },
+          {
+            align: "center",
+            cellStyle: {
+              fontWeight: "bold",
+              fontSize: "large",
             },
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-              },
-              cellStyle: {
-                width: '100px'
-              },
-              title: "Date Sold",
-              field: "dateSold",
-            },
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-              },
-              cellStyle: {
-                width: '100px'
-              },
-              title: "Country",
-              field: "country",
-            },
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-              },
-              cellStyle: {
-                width: '100px'
-              },
-              sorting: false,
-              title: "Condition",
-              field: "condition",
-            },
-            {
-              headerStyle: {
-                fontWeight: "bold",
-                fontSize: "medium",
-                alignItems: "right",
-                paddingRight: "24px",
-              },
-              cellStyle: {
-                fontWeight: "bold",
-                fontSize: "large",
-                paddingRight: "24px",
-                width: '225px'
-              },
-              type: "currency",
-              title: "Sold For (USD)",
-              field: "salePrice",
-            },
-          ]}
-          data={this.props.listings}
-          actions={[
-            {
-              icon: tableIcons.Delete,
-              tooltip: "Remove Listing",
-              onClick: this.props.handleRemove,
-            },
-          ]}
-          options={{
-            search: false,
-            showTitle: false,
-            actionsColumnIndex: -1,
-            rowStyle: {
-              height: "200px",
-              minWidth: "100%",
-            },
-            minHeight: `100%`,
-          }}
-        />
-      </div>
+            type: "currency",
+            title: "Sold For (USD)",
+            field: "salePrice",
+          },
+        ]}
+        data={this.props.listings}
+        actions={[
+          {
+            icon: tableIcons.Delete,
+            tooltip: "Remove Listing",
+            onClick: this.props.handleRemove,
+          },
+        ]}
+        options={{
+          search: false,
+          showTitle: false,
+          actionsColumnIndex: -1,
+          rowStyle: {
+            width: "100%",
+            height: "10%",
+          },
+          headerStyle: {
+            fontWeight: "bold",
+            fontSize: "medium",
+          },
+        }}
+      />
     );
+  }
+
+  render() {
+    if (this.props.resultTable === true) {
+      return <div className="responsive-table">{this.tableRender()}</div>;
+    } else {
+      return (
+        <div className="responsive-table-outliers">{this.tableRender()}</div>
+      );
+    }
   }
 }
 

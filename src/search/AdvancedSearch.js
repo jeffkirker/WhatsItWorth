@@ -7,13 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import DateFnsUtils from "@date-io/date-fns";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Input from "@material-ui/core/Input";
 
 import {
   MuiPickersUtilsProvider,
@@ -37,10 +33,10 @@ export default function AdvancedSearch(props) {
 
   const maxDate = new Date();
 
-  const [listingType, setListingType] = React.useState({
-    Auction: true,
-    BIN: true,
-  });
+  // const [listingType, setListingType] = React.useState({
+  //   Auction: true,
+  //   BIN: true,
+  // });
 
   const [maxPrice, setMaxPrice] = React.useState("");
   const [minPrice, setMinPrice] = React.useState("");

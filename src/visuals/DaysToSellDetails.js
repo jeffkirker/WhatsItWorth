@@ -58,10 +58,10 @@ class SoldPriceDetails extends Component {
     });
   }
   render() {
-    if (this.state.MinBIN == 0) {
+    if (this.state.MinBIN === 0) {
       this.setState({ MinBIN: "Same Day" });
     }
-    if (this.state.MinAuction == 0) {
+    if (this.state.MinAuction === 0) {
       this.setState({ MinAuction: "Same Day" });
     }
     return (

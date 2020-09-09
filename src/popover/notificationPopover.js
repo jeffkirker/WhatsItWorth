@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import IconButton from "@material-ui/core/IconButton";
@@ -7,14 +6,8 @@ import Alert from "@material-ui/lab/Alert";
 
 import OutlierDialog from "../outlierDialog/OutlierDialog";
 
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
-
 export default function NotificationsPopover(props) {
-  const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [DialogOpen, setOpen] = React.useState(false);
 
@@ -64,7 +57,7 @@ export default function NotificationsPopover(props) {
           {props.outlierCount > 0 && (
             <Alert severity="warning">
               There are {props.outlierCount} outliers in your results.{" "}
-              <a onClick={handleClickOpen}>Click here</a> to view them.
+              <a href="#0" onClick={handleClickOpen}>Click here</a> to view them.
               <OutlierDialog
                 open={DialogOpen}
                 onClose={handleDialogClose}

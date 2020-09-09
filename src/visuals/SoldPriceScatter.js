@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 
 class SoldPriceScatter extends Component {
   constructor(props) {
@@ -66,14 +65,11 @@ class SoldPriceScatter extends Component {
   }
 
   render() {
-    console.log("auctions", this.state.AuctionData);
-    console.log("BINS", this.state.BINData);
     if (this.state.dataReady) {
       return (
         <div>
           <Card raised className="chart-container">
-            <CardHeader title="Average Prices Over Time" />
-
+            <h2 className="card-title-text">Sold Prices Over Time</h2>
             <ResponsiveContainer height="100%">
               <ScatterChart
                 width={400}
@@ -92,7 +88,7 @@ class SoldPriceScatter extends Component {
                 <Scatter
                   name="Auctions"
                   data={this.state.data}
-                  fill="#8884d8"
+                  fill="#59C9A5"
                 />
                 {/* <Scatter
                   name="Buy It Nows"

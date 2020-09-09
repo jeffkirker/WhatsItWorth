@@ -5,8 +5,6 @@ import "semantic-ui-css/semantic.min.css";
 import Results from "./results/Results";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import AdvancedSearch from "./search/AdvancedSearch";
-
 function App() {
   return (
     // <AdvancedSearch />

@@ -11,8 +11,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemRanking from "../visuals/ItemRanking";
 import NotificationsPopover from "../popover/notificationPopover";
 
-import { getPriceDetails, itemGrade, getOutliers } from "./../utilities/utils";
+import { getPriceDetails, itemGrade } from "./../utilities/utils";
 import SoldPriceScatter from "../visuals/SoldPriceScatter";
+import ItemHistory from "../visuals/ItemHistory";
 
 class Results extends Component {
   constructor(props) {
@@ -155,7 +156,6 @@ class Results extends Component {
 
   render() {
     if (this.state.dataReady && !this.state.noData) {
-      // console.log("modified", this.state.outliers);
       return (
         <div className="result-root">
           <div>
@@ -186,10 +186,13 @@ class Results extends Component {
                 justify="center"
                 alignItems="center"
               >
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} sm={12} md={4} lg={2}>
                   <ItemRanking ranking={this.state.ranking} />
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} sm={12} md={4} lg={2}>
+                  <ItemHistory ranking={this.state.ranking} />
+                </Grid>
+                <Grid item xs={12} sm={12} md={8} lg={4}>
                   <SoldPriceDetails details={this.state.details} />
                 </Grid>
                 <Grid item xs={12} md={8}>
@@ -208,7 +211,6 @@ class Results extends Component {
                 alignItems="center"
               >
                 <Grid item>
-                   
                   <ResultTable
                     listings={this.state.listings}
                     handleRemove={this.handleRemove}
@@ -228,12 +230,6 @@ class Results extends Component {
           </div>
           <div>
             <div className="tab-bar">
-              <NotificationsPopover
-                listings={this.state.listings}
-                outlierCount={this.state.outlierCount}
-                outliers={this.state.outliers}
-                handleRemove={this.handleRemove}
-              />
               <Tabs
                 value={this.state.tab}
                 onChange={this.handleTabChange}
@@ -256,12 +252,6 @@ class Results extends Component {
           </div>
           <div>
             <div className="tab-bar">
-              <NotificationsPopover
-                listings={this.state.listings}
-                outlierCount={this.state.outlierCount}
-                outliers={this.state.outliers}
-                handleRemove={this.handleRemove}
-              />
               <Tabs
                 value={this.state.tab}
                 onChange={this.handleTabChange}
@@ -279,7 +269,7 @@ class Results extends Component {
                 justify="center"
                 alignItems="center"
               >
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} sm={12} md={4} lg={2}>
                   <ItemRanking ranking={"F"} />
                 </Grid>
               </Grid>

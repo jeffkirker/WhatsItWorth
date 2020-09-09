@@ -16,8 +16,6 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import { Hidden } from "@material-ui/core";
-import { thomsonCrossSectionDependencies } from "mathjs";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -125,7 +123,6 @@ class ResultTable extends Component {
           actionsColumnIndex: -1,
           rowStyle: {
             width: "100%",
-            height: "10%",
           },
           headerStyle: {
             fontWeight: "bold",

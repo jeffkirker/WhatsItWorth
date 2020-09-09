@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 
 class SoldPriceArea extends Component {
   constructor(props) {
@@ -28,7 +27,6 @@ class SoldPriceArea extends Component {
 
   formatData() {
     var resultArr = this.props.resultArr;
-    var counter = 0;
     var countingData = {
       name: null,
       BuyItNowSum: 0,
@@ -141,8 +139,7 @@ class SoldPriceArea extends Component {
       return (
         <div>
           <Card raised className="chart-container" style={{ marginBottom: "1rem" }}>
-            <CardHeader title="Average Prices Over Time" />
-
+            <h2 className="card-title-text">Average Prices Over Time</h2>
             <ResponsiveContainer height="100%">
               <AreaChart
                 data={this.state.data}
@@ -150,12 +147,12 @@ class SoldPriceArea extends Component {
               >
                 <defs>
                   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#59C9A5" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#59C9A5" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#D81E5B" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#D81E5B" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="name" />
@@ -165,14 +162,14 @@ class SoldPriceArea extends Component {
                 <Area
                   type="monotone"
                   dataKey="BuyItNow"
-                  stroke="#8884d8"
+                  stroke="#59C9A5"
                   fillOpacity={1}
                   fill="url(#colorUv)"
                 />
                 <Area
                   type="monotone"
                   dataKey="Auction"
-                  stroke="#82ca9d"
+                  stroke="#D81E5B"
                   fillOpacity={1}
                   fill="url(#colorPv)"
                 />

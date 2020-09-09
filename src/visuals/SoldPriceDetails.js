@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-} from "@material-ui/core";
+import { Card, CardContent, Grid } from "@material-ui/core";
 
 class SoldPriceDetails extends Component {
   render() {
     return (
       <div>
-        <Card raised style={{ marginBottom: "1rem" }}>
+        <Card
+          className="sold-price-card"
+          raised
+          style={{ marginBottom: "1rem" }}
+        >
           <CardContent>
-            <CardHeader title="Price Sold For" style={{ paddingTop: "0" }} />
+            <h2 className="card-title-text">Price Sold For</h2>
             <Grid container columns={2}>
               <Grid item xs={6}>
                 <h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4>
@@ -28,7 +27,7 @@ class SoldPriceDetails extends Component {
                   </Grid>
                   <Grid item xs={4} style={{ textAlign: "center" }}>
                     Average
-                    <h2>
+                    <h2 className="sold-price-BIN">
                       $
                       {this.props.details.AvgBIN != null
                         ? this.props.details.AvgBIN
@@ -60,7 +59,7 @@ class SoldPriceDetails extends Component {
                   </Grid>
                   <Grid item xs={4} style={{ textAlign: "center" }}>
                     Average
-                    <h2>
+                    <h2 className="sold-price-auction">
                       $
                       {this.props.details.AvgAuction != null
                         ? this.props.details.AvgAuction

@@ -41,13 +41,13 @@
   display: flex;
 }
 
-.card-container {
-  display: flex;
-  flex-direction: row;
-  height: 150px;
-  align-items: center;
-  margin-bottom: 1rem;
-  max-width: 80%;
+.item-grade-card {
+  height: 15rem;
+  margin-right: 1rem;
+}
+
+.sold-price-card {
+  height: 15rem;
 }
 
 .flex-item {
@@ -85,14 +85,9 @@
 }
 
 .card-title-text {
-  font-weight: bold;
-  font-size: medium;
   color: #6435c9;
-  float: center;
-  word-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
+  font-weight: bold;
+  margin: 16px;
 }
 
 .card-delete {
@@ -168,9 +163,8 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
-  margin: auto;
-  height: 20rem;
+  padding: 16px 16px 0 0;
+  height: 25rem;
 }
 
 .table-header {
@@ -181,17 +175,27 @@ img {
 .item-grade-letter {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  font-size: 10rem;
+  font-size: 8rem;
+  margin-top: 4rem;
 }
 
-.item-grade-column {
+.item-history-column {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding-top: 8px;
 }
 
-.item-grade-row {
+.item-history-row {
   display: flex;
   flex-direction: row;
+  margin: auto;
+  padding-bottom: 8px;
+}
+
+.item-history {
+  margin-right: 16px;
+  float: right;
 }
 
 .advanced-root {
@@ -218,4 +222,12 @@ img {
   width: 100%;
   margin: auto;
   display: table;
+}
+
+.sold-price-BIN {
+  color: #1b9876;
+}
+
+.sold-price-auction {
+  color: #a00032;
 }

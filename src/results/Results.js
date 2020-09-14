@@ -92,7 +92,7 @@ class Results extends Component {
 
   getResults(terms, minPrice, maxPrice, beforeDate, afterDate) {
     var url = encodeURI(
-      `http://localhost:4000/api?keywords=` +
+      `https://whatsitworth.app/api?keywords=` +
         terms +
         `&minPrice=` +
         minPrice +

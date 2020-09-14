@@ -19,16 +19,16 @@ exports.getListingsFromKeyword = (req, res, next) => {
   var maxPrice = 9999999;
   var minPrice = 0;
 
-  if (queryObject.maxPrice === undefined) {
+  if (queryObject.maxPrice !== undefined) {
     maxPrice = queryObject.maxPrice;
   }
-  if (queryObject.minPrice === undefined) {
+  if (queryObject.minPrice !== undefined) {
     minPrice = queryObject.minPrice;
   }
-  if (queryObject.beforeDate === undefined) {
+  if (queryObject.beforeDate !== undefined) {
     beforeDate = queryObject.beforeDate;
   }
-  if (queryObject.afterDate === undefined) {
+  if (queryObject.afterDate !== undefined) {
     afterDate = queryObject.afterDate;
   }
   console.log(queryObject);
@@ -58,60 +58,70 @@ exports.getListingsFromKeyword = (req, res, next) => {
       `sortOrder=EndTimeSoonest` +
       `&paginationInput.entriesPerPage=100`
   );
-  fetch(url)
-    .then((res) => res.json())
-    .then((body) => {
-      const rawData = body.findCompletedItemsResponse[0].searchResult[0].item;
-      // res.send(rawData[0]);
-      if (rawData) {
-        for (let i in rawData) {
-          var listing = new Listing(
-            rawData[i].itemId[0],
-            rawData[i].title[0],
-            rawData[i].viewItemURL[0],
-            rawData[i].country[0],
-            rawData[i].shippingInfo[0].shippingType[0],
-            rawData[i].listingInfo[0].endTime[0],
-            rawData[i].listingInfo[0].startTime[0]
-          );
-
-          listing.setSalePrice(
-            parseFloat(
-              rawData[i].sellingStatus[0].currentPrice[0].__value__
-            ).toFixed(2)
-          );
-          listing.setListingType(rawData[i].listingInfo[0].listingType[0]);
-          try {
-            listing.setCondition(
-              rawData[i].condition[0].conditionDisplayName[0]
-            );
-          } catch {
-            listing.setCondition(null);
-          }
-          try {
-            listing.setBidCount(rawData[i].sellingStatus[0].bidCount[0]);
-          } catch {
-            listing.setBidCount(0);
-          }
-          try {
-            listing.setImageUrl(rawData[i].galleryURL[0]);
-          } catch {
-            listing.setImageUrl(null);
-          }
-          listing.setOutlier(false);
-          listings.push(listing);
+  try {
+    fetch(url)
+      .then((res) => res.json())
+      .then((body) => {
+        try {
+          
+        } catch (error) {
+          
         }
+        const rawData = body.findCompletedItemsResponse[0].searchResult[0].item;
+        // res.send(rawData[0]);
+        if (rawData) {
+          for (let i in rawData) {
+            var listing = new Listing(
+              rawData[i].itemId[0],
+              rawData[i].title[0],
+              rawData[i].viewItemURL[0],
+              rawData[i].country[0],
+              rawData[i].shippingInfo[0].shippingType[0],
+              rawData[i].listingInfo[0].endTime[0],
+              rawData[i].listingInfo[0].startTime[0]
+            );
 
-        res.send({
-          listings: getOutliers.getOutliers(listings),
-          ranking: itemGrade.itemGrade(listings),
-          details: getPriceDetails.getPriceDetails(listings),
-        });
-        // res.send(rawData);
-      } else {
-        res.send({ listings: { listings: [] } });
-      }
-    });
+            listing.setSalePrice(
+              parseFloat(
+                rawData[i].sellingStatus[0].currentPrice[0].__value__
+              ).toFixed(2)
+            );
+            listing.setListingType(rawData[i].listingInfo[0].listingType[0]);
+            try {
+              listing.setCondition(
+                rawData[i].condition[0].conditionDisplayName[0]
+              );
+            } catch {
+              listing.setCondition(null);
+            }
+            try {
+              listing.setBidCount(rawData[i].sellingStatus[0].bidCount[0]);
+            } catch {
+              listing.setBidCount(0);
+            }
+            try {
+              listing.setImageUrl(rawData[i].galleryURL[0]);
+            } catch {
+              listing.setImageUrl(null);
+            }
+            listing.setOutlier(false);
+            listings.push(listing);
+          }
+          console.log("Sending response");
+          res.send({
+            listings: getOutliers.getOutliers(listings),
+            ranking: itemGrade.itemGrade(listings),
+            details: getPriceDetails.getPriceDetails(listings),
+          });
+          // res.send(rawData);
+        } else {
+          console.log("Sending empty response");
+          res.send({ listings: { listings: [] } });
+        }
+      });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.getListingDetails = (req, res, next) => {

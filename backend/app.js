@@ -1,4 +1,4 @@
-require("dotenv").config();
+const result = require("dotenv").config();
 
 const path = require("path");
 
@@ -13,6 +13,7 @@ const listingRoutes = require("./routes/listings");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
+  console.log("Request received")
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -27,4 +28,4 @@ app.use((req, res, next) => {
 
 app.use("/", listingRoutes);
 
-app.listen(4000);
+app.listen(4000, () => console.log('Server app listening on port 4000'));

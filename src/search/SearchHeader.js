@@ -37,7 +37,7 @@ class SearchHeader extends Component {
           <h2 className="search-header-title">What's It Worth?</h2>
         </Link>
         <form className="search-header-container">
-          <div className="search-header-search-bar">
+          <div>
             <TextField
               variant="outlined"
               size="small"

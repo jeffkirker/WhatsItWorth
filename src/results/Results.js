@@ -177,6 +177,7 @@ class Results extends Component {
                 // direction="column"
                 justify="center"
                 alignItems="center"
+                spacing={1}
               >
                 <Grid item xs={12} sm={12} md={4} lg={2}>
                   <ItemRanking ranking={this.state.ranking} />

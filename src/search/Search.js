@@ -41,6 +41,7 @@ class Search extends Component {
   };
   handleBeforeDateChange = (date) => {
     this.setState({ beforeDate: date.toISOString() });
+    console.log("Before data changed: ", date);
   };
 
   handleCheckChange = (event) => {

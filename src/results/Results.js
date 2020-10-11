@@ -92,7 +92,7 @@ class Results extends Component {
 
   getResults(terms, minPrice, maxPrice, beforeDate, afterDate) {
     var url = encodeURI(
-      `https://whatsitworth.app/api?keywords=` +
+      `http://localhost:4000/api?keywords=` +
         terms +
         `&minPrice=` +
         minPrice +
@@ -127,20 +127,12 @@ class Results extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.location.state !== undefined) {
-      this.setState({
-        minPrice: this.props.location.state.minPrice,
-        maxPrice: this.props.location.state.maxPrice,
-        beforeDate: this.props.location.state.beforeDate,
-        afterDate: this.props.location.state.afterDate,
-      });
-    }
     this.getResults(
       this.props.match.params.terms,
-      this.state.minPrice,
-      this.state.maxPrice,
-      this.state.beforeDate,
-      this.state.afterDate
+      this.props.location.state.minPrice,
+      this.props.location.state.maxPrice,
+      this.props.location.state.beforeDate,
+      this.props.location.state.afterDate
     );
   }
 

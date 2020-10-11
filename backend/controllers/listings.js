@@ -19,16 +19,16 @@ exports.getListingsFromKeyword = (req, res, next) => {
   var maxPrice = 9999999;
   var minPrice = 0;
 
-  if (queryObject.maxPrice !== undefined) {
+  if (queryObject.maxPrice !== 'undefined') {
     maxPrice = queryObject.maxPrice;
   }
-  if (queryObject.minPrice !== undefined) {
+  if (queryObject.minPrice !== 'undefined') {
     minPrice = queryObject.minPrice;
   }
-  if (queryObject.beforeDate !== undefined) {
+  if (queryObject.beforeDate !== 'undefined') {
     beforeDate = queryObject.beforeDate;
   }
-  if (queryObject.afterDate !== undefined) {
+  if (queryObject.afterDate !== 'undefined') {
     afterDate = queryObject.afterDate;
   }
   console.log(queryObject);

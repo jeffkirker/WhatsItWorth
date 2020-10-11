@@ -1,18 +1,15 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,11 +20,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,73 +31,58 @@
     transform: rotate(360deg);
   }
 }
-
 .cardRoot {
   display: flex;
 }
-
 .item-grade-card {
   min-height: 15rem;
 }
-
 .sold-price-card {
   min-height: 15rem;
 }
-
 .flex-item {
   flex-grow: 1;
 }
-
 .card-image {
   float: left;
   width: 10rem;
 }
-
 .card-field {
   font-weight: bold;
 }
-
 .card-details {
   float: center;
 }
-
 .card-description {
   margin: auto;
   max-width: 60%;
 }
-
 .card-price {
   font-size: large;
   font-weight: bold;
   padding: 8px;
 }
-
 .card-title-container {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .card-title-text {
   color: #6435c9;
   font-weight: bold;
   margin: 16px;
 }
-
 .card-delete {
   float: right;
 }
-
 img {
   object-fit: contain;
 }
-
 .helper {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
-
 .search-header-container {
   margin: 0.5rem 0 0.5rem 1rem;
   display: flex;
@@ -110,13 +90,11 @@ img {
   float: left;
   justify-content: center;
 }
-
 .search-header-title {
   color: #6435c9;
   font-weight: bolder;
   margin: 0;
 }
-
 .search-button {
   margin: 0 1rem 0 1rem;
   box-shadow: 0px 1px 0px 0px #b9c7c5;
@@ -135,12 +113,10 @@ img {
 .search-button:hover {
   background-color: #290197;
 }
-
 .result-root {
   display: flex;
   flex-direction: column;
 }
-
 .tab-bar {
   display: flex;
   flex-direction: row;
@@ -149,11 +125,9 @@ img {
   color: white;
   font-weight: bold;
 }
-
 .tab:hover {
   background-color: #9963fd;
 }
-
 .chart-container {
   display: flex;
   flex-direction: column;
@@ -161,44 +135,37 @@ img {
   padding: 16px 16px 0 0;
   height: 25rem;
 }
-
 .table-header {
   font-weight: bold;
   font-size: medium;
 }
-
 .item-grade-letter {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 8rem;
   margin-top: 4rem;
 }
-
 .item-history-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-top: 8px;
 }
-
 .item-history-row {
   display: flex;
   flex-direction: row;
   margin: auto;
   padding-bottom: 8px;
 }
-
 .item-history {
   margin-right: 16px;
   float: right;
 }
-
 .advanced-root {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-
 .advanced-row {
   display: flex;
   flex-direction: row;
@@ -206,23 +173,19 @@ img {
   width: 100%;
   margin: 8px 0 8px 0;
 }
-
 .responsive-table {
-  width: 80vw;
-  margin: auto;
+  /* width: 80vw; */
+  /* margin: auto; */
   display: table;
 }
-
 .responsive-table-outliers {
   width: 100%;
   margin: auto;
   display: table;
 }
-
 .sold-price-BIN {
   color: #1b9876;
 }
-
 .sold-price-auction {
   color: #a00032;
 }

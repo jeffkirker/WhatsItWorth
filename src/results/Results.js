@@ -127,13 +127,24 @@ class Results extends Component {
   }
 
   async componentDidMount() {
-    this.getResults(
-      this.props.match.params.terms,
-      this.props.location.state.minPrice,
-      this.props.location.state.maxPrice,
-      this.props.location.state.beforeDate,
-      this.props.location.state.afterDate
-    );
+    if(this.props.location.state !== undefined){
+      this.getResults(
+        this.props.match.params.terms,
+        this.props.location.state.minPrice,
+        this.props.location.state.maxPrice,
+        this.props.location.state.beforeDate,
+        this.props.location.state.afterDate
+      );
+    } else {
+      this.getResults(
+        this.props.match.params.terms,
+        this.state.minPrice,
+        this.state.maxPrice,
+        this.state.beforeDate,
+        this.state.afterDate
+      );
+    }
+    
   }
 
   TabPanel(props) {

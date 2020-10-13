@@ -92,7 +92,7 @@ class Results extends Component {
 
   getResults(terms, minPrice, maxPrice, beforeDate, afterDate) {
     var url = encodeURI(
-      `http://localhost:4000/api?keywords=` +
+      process.env.REACT_APP_BACKEND_URL +
         terms +
         `&minPrice=` +
         minPrice +

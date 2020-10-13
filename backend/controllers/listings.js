@@ -19,16 +19,16 @@ exports.getListingsFromKeyword = (req, res, next) => {
   var maxPrice = 9999999;
   var minPrice = 0;
 
-  if (queryObject.maxPrice !== 'undefined') {
+  if (queryObject.maxPrice !== "undefined") {
     maxPrice = queryObject.maxPrice;
   }
-  if (queryObject.minPrice !== 'undefined') {
+  if (queryObject.minPrice !== "undefined") {
     minPrice = queryObject.minPrice;
   }
-  if (queryObject.beforeDate !== 'undefined') {
+  if (queryObject.beforeDate !== "undefined") {
     beforeDate = queryObject.beforeDate;
   }
-  if (queryObject.afterDate !== 'undefined') {
+  if (queryObject.afterDate !== "undefined") {
     afterDate = queryObject.afterDate;
   }
   console.log(queryObject);
@@ -58,15 +58,15 @@ exports.getListingsFromKeyword = (req, res, next) => {
       `sortOrder=EndTimeSoonest` +
       `&paginationInput.entriesPerPage=100`
   );
+  console.log("url: ", url);
   try {
     fetch(url)
       .then((res) => res.json())
       .then((body) => {
         try {
-          
-        } catch (error) {
-          
-        }
+          console.log(body.findCompletedItemsResponse[0].error[0]);
+        } catch (error) {}
+        console.log("body", body);
         const rawData = body.findCompletedItemsResponse[0].searchResult[0].item;
         // res.send(rawData[0]);
         if (rawData) {

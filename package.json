@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "nodemon backend/app.js"
+    "start": "nodemon backend/app.js",
+    "deploy-production": "react-scripts build && scp -r ./build/* jeffk@167.99.185.114:/var/www/whatsitworth.app/html"
   },
   "eslintConfig": {
     "extends": "react-app"

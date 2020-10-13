@@ -41,6 +41,7 @@ class Search extends Component {
   };
   handleBeforeDateChange = (date) => {
     this.setState({ beforeDate: date.toISOString() });
+    console.log("Before data changed: ", date);
   };
 
   handleCheckChange = (event) => {
@@ -71,6 +72,7 @@ class Search extends Component {
           textAlign="center"
           style={{ height: "100vh" }}
           verticalAlign="middle"
+          padded
         >
           <Grid.Column style={{ maxWidth: 600 }}>
             <Header as="h2" color="violet" textAlign="center">

@@ -92,7 +92,7 @@ class Results extends Component {
 
   getResults(terms, minPrice, maxPrice, beforeDate, afterDate) {
     var url = encodeURI(
-      `https://whatsitworth.app/api?keywords=` +
+      process.env.REACT_APP_BACKEND_URL +
         terms +
         `&minPrice=` +
         minPrice +
@@ -127,21 +127,24 @@ class Results extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.location.state !== undefined) {
-      this.setState({
-        minPrice: this.props.location.state.minPrice,
-        maxPrice: this.props.location.state.maxPrice,
-        beforeDate: this.props.location.state.beforeDate,
-        afterDate: this.props.location.state.afterDate,
-      });
+    if(this.props.location.state !== undefined){
+      this.getResults(
+        this.props.match.params.terms,
+        this.props.location.state.minPrice,
+        this.props.location.state.maxPrice,
+        this.props.location.state.beforeDate,
+        this.props.location.state.afterDate
+      );
+    } else {
+      this.getResults(
+        this.props.match.params.terms,
+        this.state.minPrice,
+        this.state.maxPrice,
+        this.state.beforeDate,
+        this.state.afterDate
+      );
     }
-    this.getResults(
-      this.props.match.params.terms,
-      this.state.minPrice,
-      this.state.maxPrice,
-      this.state.beforeDate,
-      this.state.afterDate
-    );
+    
   }
 
   TabPanel(props) {
@@ -185,6 +188,7 @@ class Results extends Component {
                 // direction="column"
                 justify="center"
                 alignItems="center"
+                spacing={1}
               >
                 <Grid item xs={12} sm={12} md={4} lg={2}>
                   <ItemRanking ranking={this.state.ranking} />

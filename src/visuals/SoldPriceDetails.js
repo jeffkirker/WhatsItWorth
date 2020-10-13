@@ -16,7 +16,7 @@ class SoldPriceDetails extends Component {
               <Grid item xs={6}>
                 <h4 style={{ textAlign: "center" }}>Buy It Now (USD)</h4>
                 <Grid container align-items="center" justify="center">
-                  <Grid item xs={3} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={3} style={{ textAlign: "center" }}>
                     Minimum
                     <h4>
                       $
@@ -25,7 +25,7 @@ class SoldPriceDetails extends Component {
                         : 0}
                     </h4>
                   </Grid>
-                  <Grid item xs={4} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={4} style={{ textAlign: "center" }}>
                     Average
                     <h2 className="sold-price-BIN">
                       $
@@ -34,7 +34,7 @@ class SoldPriceDetails extends Component {
                         : 0}
                     </h2>
                   </Grid>
-                  <Grid item xs={3} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={3} style={{ textAlign: "center" }}>
                     Maximum
                     <h4>
                       $
@@ -48,7 +48,7 @@ class SoldPriceDetails extends Component {
               <Grid item xs={6}>
                 <h4 style={{ textAlign: "center" }}>Auctions (USD)</h4>
                 <Grid container align-items="center" justify="center">
-                  <Grid item xs={3} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={3} style={{ textAlign: "center" }}>
                     Minimum
                     <h4>
                       $
@@ -57,7 +57,7 @@ class SoldPriceDetails extends Component {
                         : 0}
                     </h4>
                   </Grid>
-                  <Grid item xs={4} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={4} style={{ textAlign: "center" }}>
                     Average
                     <h2 className="sold-price-auction">
                       $
@@ -66,7 +66,7 @@ class SoldPriceDetails extends Component {
                         : 0}
                     </h2>
                   </Grid>
-                  <Grid item xs={4} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} md={3} style={{ textAlign: "center" }}>
                     Maximum
                     <h4>
                       $

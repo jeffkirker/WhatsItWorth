@@ -4,16 +4,24 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
 const listingRoutes = require("./routes/listings");
+// API limiter, 100 requests/15min
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+
+app.use("/", apiLimiter);
 
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  console.log("Request received")
+  console.log("Request received");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -28,4 +36,6 @@ app.use((req, res, next) => {
 
 app.use("/", listingRoutes);
 
-app.listen(4000, () => console.log('Server app listening on port 4000'));
+app.listen(4000, () => console.log("Server app listening on port 4000"));
+
+module.exports = app;

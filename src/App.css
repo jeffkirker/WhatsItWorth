@@ -1,3 +1,28 @@
+.about-button {
+  float: left;
+  padding: 16px 0 0 16px;
+  font-size: larger;
+  color: #6435c9;
+}
+
+.about-header {
+  padding: 24px 0 0 0;
+}
+
+.about-page {
+  max-width: 40%;
+  margin: 0 auto;
+}
+
+.about-message {
+  margin: 0 auto;
+  padding: 16px 0 16px 0;
+}
+
+.about-text {
+  text-align: left;
+}
+
 .App {
   text-align: center;
 }
@@ -75,6 +100,13 @@
 .card-delete {
   float: right;
 }
+
+.display-message {
+  width: 40%; 
+  margin: auto;
+  padding: 16px 0 16px 0;
+}
+
 img {
   object-fit: contain;
 }
